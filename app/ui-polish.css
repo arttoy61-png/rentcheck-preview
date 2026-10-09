@@ -117,7 +117,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,.s
  #mapPage:has(.workspace.has-detail) .workspace{flex:1!important}
  #mapPage .workspace.has-detail .mapsection{display:none!important}
  #mapPage .workspace.has-detail .detailpane{
-   position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-height:none!important;
+   position:fixed!important;inset:52px 0 0 0!important;width:100%!important;height:auto!important;max-height:none!important;
    border:0!important;border-radius:0!important;box-shadow:none!important;background:#fff!important;z-index:90!important
  }
  #mapPage .workspace.has-detail .detailtop{min-height:54px;padding:7px 14px;border-bottom:1px solid var(--ui-line)}

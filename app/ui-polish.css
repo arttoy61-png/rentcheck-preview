@@ -79,3 +79,49 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,.s
  #mapPage #homeCalendarStatus .home-calendar-link button{min-height:26px;padding:2px 5px;font-size:11px}
  #mapPage #homeCalendarStatus .home-calendar-link a,#mapPage #homeCalendarStatus .home-calendar-link small{display:none}
 }
+
+
+/* Mobile step-by-step flow: map/list -> selected detail page */
+@media(max-width:700px){
+ /* One decision per row: region + Filter. Detailed topic filters open from the Filter action. */
+ #mapPage:has(.workspace[data-topic=housing]) #designFilters select:not(#designDistrict),
+ #mapPage:has(.workspace[data-topic=redevelopment]) #designFilters select:not(#designDistrict),
+ #mapPage:has(.workspace[data-topic=sale]) #designFilters select:not(#designDistrict),
+ #mapPage:has(.workspace[data-topic=auction]) #designFilters select:not(#designDistrict){display:none}
+ #mapPage #designFilters>button{flex:0 0 62px;width:62px;font-size:14px;font-weight:700}
+
+ /* Map mode is intentionally sparse. The small strip only previews what is available. */
+ #mapPage .workspace:not(.mapexpanded):not(.has-detail) .listpane{height:96px!important}
+ #mapPage .workspace:not(.mapexpanded):not(.has-detail) .mobile-sheet-hint{margin:0 16px 6px;font-size:12px;line-height:17px}
+
+ /* Housing opens as a list page; redevelopment changes to a list page only after List is tapped. */
+ #mapPage .workspace.mapexpanded[data-topic=housing] .mapsection,
+ #mapPage .workspace.mapexpanded[data-topic=redevelopment] .mapsection{display:none!important}
+ #mapPage .workspace.mapexpanded[data-topic=housing] .listpane,
+ #mapPage .workspace.mapexpanded[data-topic=redevelopment] .listpane{
+   position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-height:none!important;
+   border:0!important;border-radius:0!important;box-shadow:none!important;padding-bottom:0!important
+ }
+ #mapPage .workspace.mapexpanded[data-topic=housing] .listtop,
+ #mapPage .workspace.mapexpanded[data-topic=redevelopment] .listtop{padding:4px 16px;min-height:46px;height:46px}
+ #mapPage .workspace.mapexpanded[data-topic=housing] #results,
+ #mapPage .workspace.mapexpanded[data-topic=redevelopment] #results{padding-bottom:24px}
+
+ /* Source freshness still loads automatically; keep it out of the primary mobile reading path. */
+ #mapPage .workspace[data-topic=housing] #homeCalendarStatus{display:none!important}
+
+ /* A selected item becomes its own reading screen rather than another sheet over the map. */
+ #mapPage:has(.workspace.has-detail) .tabs,
+ #mapPage:has(.workspace.has-detail) > .design-filterbar{display:none!important}
+ body:has(#mapPage .workspace.has-detail) header .topnav{display:none!important}
+ #mapPage:has(.workspace.has-detail) .workspace{flex:1!important}
+ #mapPage .workspace.has-detail .mapsection{display:none!important}
+ #mapPage .workspace.has-detail .detailpane{
+   position:fixed!important;inset:52px 0 0 0!important;width:100%!important;height:auto!important;max-height:none!important;
+   border:0!important;border-radius:0!important;box-shadow:none!important;background:#fff!important;z-index:90!important
+ }
+ #mapPage .workspace.has-detail .detailtop{min-height:54px;padding:7px 14px;border-bottom:1px solid var(--ui-line)}
+ #mapPage .workspace.has-detail #collapseDetail{display:none!important}
+ #mapPage .workspace.has-detail #detailBody{padding:16px 18px 32px!important}
+ #mapPage .workspace.has-detail #closeDetail{font-weight:700;background:#fff;border-color:transparent;padding-left:0}
+}

@@ -1,0 +1,76 @@
+name: Import approved HOME calendar review
+on:
+  push:
+    branches: [review/home-calendar-20261009]
+    paths: [.github/workflows/import-home-calendar-review.yml]
+permissions:
+  contents: write
+concurrency:
+  group: rentcheck-home-calendar-review
+  cancel-in-progress: false
+jobs:
+  import:
+    if: github.repository == 'arttoy61-png/rentcheck-preview' && github.ref == 'refs/heads/review/home-calendar-20261009'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: review/home-calendar-20261009
+          fetch-depth: 0
+      - name: Apply exact reviewed patch without modifying source data or credentials
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path, PurePosixPath
+          import hashlib, io, json, os, stat, subprocess, urllib.request, zipfile
+          base = 'eb42d86df586eaafad0f2deadff53ea3deed3b96'
+          allowed = {'app/app.js', 'app/index.html', 'app/home-calendar-link.js', 'app/home-calendar-ui.css'}
+          def git(*args):
+              return subprocess.check_output(['git', *args], text=True).strip()
+          assert git('branch', '--show-current') == 'review/home-calendar-20261009'
+          assert git('rev-parse', 'origin/main') == base, 'Main advanced; compare changes before retrying.'
+          subprocess.run(['git', 'merge-base', '--is-ancestor', base, 'HEAD'], check=True)
+          before = {p: hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in git('ls-files').splitlines() if p not in allowed}
+          url = 'https://d2ol7oe51mr4n9.cloudfront.net/user_3IDBI0waiBn60lYtWWKmKzM268s/6e6f6ac2-e641-4c9b-89f4-8fa3fa6ff5e6.zip'
+          req = urllib.request.Request(url, headers={'User-Agent': 'RentCheck-approved-calendar-review/1.0'})
+          with urllib.request.urlopen(req, timeout=45) as response:
+              raw = response.read(2000001)
+          assert len(raw) <= 2000000
+          assert hashlib.sha256(raw).hexdigest() == 'f478a0e221106a969cf2b8114e5d3a3b58de2ab50487f7a5cc5d0cc0b8f819d1', 'Review archive changed.'
+          with zipfile.ZipFile(io.BytesIO(raw)) as z:
+              assert len(z.infolist()) < 50 and sum(i.file_size for i in z.infolist()) < 10000000
+              for i in z.infolist():
+                  p = PurePosixPath(i.filename)
+                  assert not p.is_absolute() and '..' not in p.parts and not stat.S_ISLNK(i.external_attr >> 16)
+              expected = {p: z.read('modified/' + p) for p in allowed}
+              patch = z.read('changes.patch')
+              assert hashlib.sha256(patch).hexdigest() == 'be94840a5a6d2a2647d6dd6704ba83b20c9a163d487506d894efa4c7328cb4a1'
+          if not all(Path(p).exists() and Path(p).read_bytes() == b for p, b in expected.items()):
+              subprocess.run(['git', 'apply', '--index', '--check', '-'], input=patch, check=True)
+              subprocess.run(['git', 'apply', '--index', '-'], input=patch, check=True)
+          changes = set(git('diff', '--cached', '--name-only').splitlines())
+          assert changes <= allowed, 'Unexpected files in patch.'
+          assert all(Path(p).read_bytes() == b for p, b in expected.items()), 'Runtime file mismatch.'
+          assert all(Path(p).exists() and hashlib.sha256(Path(p).read_bytes()).hexdigest() == h for p, h in before.items()), 'Protected file changed.'
+          data_count = len([p for p in before if p.startswith('app/data/')])
+          assert data_count == 916
+          for p in ['app/app.js', 'app/home-calendar-link.js', 'app/kakao-map-engine.js']:
+              subprocess.run(['node', '--check', p], check=True)
+          print(json.dumps({'base': base, 'runtime_files': sorted(allowed), 'data_files_preserved': data_count, 'protected_files_preserved': len(before), 'production_written': False, 'map_keys_unchanged': True}))
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('## Approved HOME calendar integration\n\nFour reviewed runtime files verified by archive and patch SHA-256. Data files: 916 unchanged. Existing map credentials, article bodies, map engine, styles and production source are unchanged. Candidate verification: 21 logic tests and 23 browser scenarios; live post-deployment checks are separate.\n')
+          PY
+      - name: Commit runtime changes on review branch
+        shell: bash
+        run: |
+          set -eu
+          test "$(git branch --show-current)" = 'review/home-calendar-20261009'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if ! git diff --cached --quiet; then
+            git commit -m 'Connect preview housing calendar to live HOME feed and verified application windows'
+            git push origin HEAD:refs/heads/review/home-calendar-20261009
+          fi
+          echo "Review commit: $(git rev-parse HEAD)"
+          echo 'Production home not modified. Preview Pages deployment follows the separately approved main merge.'

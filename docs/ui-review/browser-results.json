@@ -1,0 +1,1174 @@
+{
+  "base": "494780e6b5c794105b898ad2cfa55e6033bcf9c1",
+  "method": "Isolated Chromium context serves proposed files and latest repository data at existing allowed origin. Kakao SDK and tiles are live, not mocked. Main unchanged.",
+  "tests": [
+    {
+      "name": "desktop",
+      "label": "auto-connect / map tiles / no key prompt",
+      "pass": true
+    },
+    {
+      "name": "desktop",
+      "label": "Gangnam > Gangseo > refresh synchronized",
+      "pass": true
+    },
+    {
+      "name": "desktop",
+      "label": "immediate refresh after region change",
+      "pass": true
+    },
+    {
+      "name": "desktop",
+      "label": "layout and no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "desktop",
+      "label": "coverage information without losing source text",
+      "pass": true
+    },
+    {
+      "name": "desktop",
+      "label": "calendar opens from existing submenu; close and filter persist",
+      "pass": true
+    },
+    {
+      "name": "desktop",
+      "label": "notice full title and detail return with fixed map",
+      "pass": true
+    },
+    {
+      "name": "desktop",
+      "label": "tools / articles / map return",
+      "pass": true
+    },
+    {
+      "name": "desktop",
+      "label": "topic switching and selected region",
+      "pass": true
+    },
+    {
+      "name": "mobile",
+      "label": "auto-connect / map tiles / no key prompt",
+      "pass": true
+    },
+    {
+      "name": "mobile",
+      "label": "Gangnam > Gangseo > refresh synchronized",
+      "pass": true
+    },
+    {
+      "name": "mobile",
+      "label": "immediate refresh after region change",
+      "pass": true
+    },
+    {
+      "name": "mobile",
+      "label": "layout and no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "mobile",
+      "label": "list low > middle > high > middle controls",
+      "pass": true
+    },
+    {
+      "name": "mobile",
+      "label": "coverage information without losing source text",
+      "pass": true
+    },
+    {
+      "name": "mobile",
+      "label": "calendar opens from existing submenu; close and filter persist",
+      "pass": true
+    },
+    {
+      "name": "mobile",
+      "label": "notice full title and detail return with fixed map",
+      "pass": true
+    },
+    {
+      "name": "mobile",
+      "label": "tools / articles / map return",
+      "pass": true
+    },
+    {
+      "name": "mobile",
+      "label": "topic switching and selected region",
+      "pass": true
+    },
+    {
+      "name": "1280x800",
+      "label": "no horizontal overflow; visible map; landscape list usable",
+      "pass": true
+    },
+    {
+      "name": "1024x768",
+      "label": "no horizontal overflow; visible map; landscape list usable",
+      "pass": true
+    },
+    {
+      "name": "768x1024",
+      "label": "no horizontal overflow; visible map; landscape list usable",
+      "pass": true
+    },
+    {
+      "name": "375x667",
+      "label": "no horizontal overflow; visible map; landscape list usable",
+      "pass": true
+    },
+    {
+      "name": "430x932",
+      "label": "no horizontal overflow; visible map; landscape list usable",
+      "pass": true
+    },
+    {
+      "name": "844x390",
+      "label": "no horizontal overflow; visible map; landscape list usable",
+      "pass": true
+    }
+  ],
+  "screens": [
+    {
+      "name": "desktop-housing-home",
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "overflow": false,
+        "tiles": 61,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 60,
+          "visible": true
+        },
+        ".tabs": {
+          "x": 0,
+          "y": 60,
+          "width": 1440,
+          "height": 48,
+          "visible": true
+        },
+        ".listpane": {
+          "x": 0,
+          "y": 108,
+          "width": 400,
+          "height": 792,
+          "visible": true
+        },
+        "#results": {
+          "x": 0,
+          "y": 317,
+          "width": 399,
+          "height": 583,
+          "visible": true
+        },
+        ".mapcanvas": {
+          "x": 400,
+          "y": 108,
+          "width": 1040,
+          "height": 792,
+          "visible": true
+        },
+        "#detail": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        ".topnav": {
+          "x": 179.546875,
+          "y": 0,
+          "width": 307.34375,
+          "height": 59,
+          "visible": true
+        },
+        "#designFilters": {
+          "x": 0,
+          "y": 164,
+          "width": 399,
+          "height": 58,
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "desktop-calendar",
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "overflow": false,
+        "tiles": 61,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 60,
+          "visible": true
+        },
+        ".tabs": {
+          "x": 0,
+          "y": 60,
+          "width": 1440,
+          "height": 48,
+          "visible": true
+        },
+        ".listpane": {
+          "x": 0,
+          "y": 108,
+          "width": 400,
+          "height": 792,
+          "visible": true
+        },
+        "#results": {
+          "x": 0,
+          "y": 317,
+          "width": 399,
+          "height": 583,
+          "visible": true
+        },
+        ".mapcanvas": {
+          "x": 400,
+          "y": 108,
+          "width": 1040,
+          "height": 792,
+          "visible": true
+        },
+        "#detail": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        ".topnav": {
+          "x": 179.546875,
+          "y": 0,
+          "width": 307.34375,
+          "height": 59,
+          "visible": true
+        },
+        "#designFilters": {
+          "x": 0,
+          "y": 164,
+          "width": 399,
+          "height": 58,
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "desktop-detail",
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "overflow": false,
+        "tiles": 61,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 60,
+          "visible": true
+        },
+        ".tabs": {
+          "x": 0,
+          "y": 60,
+          "width": 1440,
+          "height": 48,
+          "visible": true
+        },
+        ".listpane": {
+          "x": 0,
+          "y": 108,
+          "width": 400,
+          "height": 792,
+          "visible": false
+        },
+        "#results": {
+          "x": 0,
+          "y": 317,
+          "width": 399,
+          "height": 583,
+          "visible": false
+        },
+        ".mapcanvas": {
+          "x": 400,
+          "y": 108,
+          "width": 1040,
+          "height": 792,
+          "visible": true
+        },
+        "#detail": {
+          "x": 0,
+          "y": 108,
+          "width": 400,
+          "height": 792,
+          "visible": true
+        },
+        ".topnav": {
+          "x": 179.546875,
+          "y": 0,
+          "width": 307.34375,
+          "height": 59,
+          "visible": true
+        },
+        "#designFilters": {
+          "x": 0,
+          "y": 164,
+          "width": 399,
+          "height": 58,
+          "visible": false
+        }
+      }
+    },
+    {
+      "name": "desktop-redevelopment",
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "overflow": false,
+        "tiles": 61,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 60,
+          "visible": true
+        },
+        ".tabs": {
+          "x": 0,
+          "y": 60,
+          "width": 1440,
+          "height": 48,
+          "visible": true
+        },
+        ".listpane": {
+          "x": 0,
+          "y": 108,
+          "width": 400,
+          "height": 792,
+          "visible": true
+        },
+        "#results": {
+          "x": 0,
+          "y": 317,
+          "width": 399,
+          "height": 583,
+          "visible": true
+        },
+        ".mapcanvas": {
+          "x": 400,
+          "y": 108,
+          "width": 1040,
+          "height": 792,
+          "visible": true
+        },
+        "#detail": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        ".topnav": {
+          "x": 179.546875,
+          "y": 0,
+          "width": 307.34375,
+          "height": 59,
+          "visible": true
+        },
+        "#designFilters": {
+          "x": 0,
+          "y": 164,
+          "width": 399,
+          "height": 58,
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "mobile-housing-home",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "overflow": false,
+        "tiles": 25,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 52,
+          "visible": true
+        },
+        ".tabs": {
+          "x": 0,
+          "y": 52,
+          "width": 390,
+          "height": 44,
+          "visible": true
+        },
+        ".listpane": {
+          "x": 0,
+          "y": 696,
+          "width": 390,
+          "height": 84,
+          "visible": true
+        },
+        "#results": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        ".mapcanvas": {
+          "x": 0,
+          "y": 148,
+          "width": 390,
+          "height": 632,
+          "visible": true
+        },
+        "#detail": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        ".topnav": {
+          "x": 0,
+          "y": 780,
+          "width": 390,
+          "height": 64,
+          "visible": true
+        },
+        "#designFilters": {
+          "x": 0,
+          "y": 96,
+          "width": 390,
+          "height": 52,
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "mobile-list-high",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "overflow": false,
+        "tiles": 25,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 52,
+          "visible": true
+        },
+        ".tabs": {
+          "x": 0,
+          "y": 52,
+          "width": 390,
+          "height": 44,
+          "visible": true
+        },
+        ".listpane": {
+          "x": 0,
+          "y": 164,
+          "width": 390,
+          "height": 616,
+          "visible": true
+        },
+        "#results": {
+          "x": 1,
+          "y": 307,
+          "width": 388,
+          "height": 472,
+          "visible": true
+        },
+        ".mapcanvas": {
+          "x": 0,
+          "y": 148,
+          "width": 390,
+          "height": 632,
+          "visible": true
+        },
+        "#detail": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        ".topnav": {
+          "x": 0,
+          "y": 780,
+          "width": 390,
+          "height": 64,
+          "visible": true
+        },
+        "#designFilters": {
+          "x": 0,
+          "y": 96,
+          "width": 390,
+          "height": 52,
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "mobile-calendar",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "overflow": false,
+        "tiles": 25,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 52,
+          "visible": true
+        },
+        ".tabs": {
+          "x": 0,
+          "y": 52,
+          "width": 390,
+          "height": 44,
+          "visible": true
+        },
+        ".listpane": {
+          "x": 0,
+          "y": 413.453125,
+          "width": 390,
+          "height": 366.546875,
+          "visible": true
+        },
+        "#results": {
+          "x": 1,
+          "y": 556.453125,
+          "width": 388,
+          "height": 222.546875,
+          "visible": true
+        },
+        ".mapcanvas": {
+          "x": 0,
+          "y": 148,
+          "width": 390,
+          "height": 632,
+          "visible": true
+        },
+        "#detail": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        ".topnav": {
+          "x": 0,
+          "y": 780,
+          "width": 390,
+          "height": 64,
+          "visible": true
+        },
+        "#designFilters": {
+          "x": 0,
+          "y": 96,
+          "width": 390,
+          "height": 52,
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "mobile-detail",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "overflow": false,
+        "tiles": 25,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 52,
+          "visible": true
+        },
+        ".tabs": {
+          "x": 0,
+          "y": 52,
+          "width": 390,
+          "height": 44,
+          "visible": true
+        },
+        ".listpane": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        "#results": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        ".mapcanvas": {
+          "x": 0,
+          "y": 148,
+          "width": 390,
+          "height": 632,
+          "visible": true
+        },
+        "#detail": {
+          "x": 0,
+          "y": 400.8125,
+          "width": 390,
+          "height": 379.1875,
+          "visible": true
+        },
+        ".topnav": {
+          "x": 0,
+          "y": 780,
+          "width": 390,
+          "height": 64,
+          "visible": true
+        },
+        "#designFilters": {
+          "x": 0,
+          "y": 96,
+          "width": 390,
+          "height": 52,
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "mobile-detail-high",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "overflow": false,
+        "tiles": 25,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 52,
+          "visible": true
+        },
+        ".tabs": {
+          "x": 0,
+          "y": 52,
+          "width": 390,
+          "height": 44,
+          "visible": true
+        },
+        ".listpane": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        "#results": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        ".mapcanvas": {
+          "x": 0,
+          "y": 148,
+          "width": 390,
+          "height": 632,
+          "visible": true
+        },
+        "#detail": {
+          "x": 0,
+          "y": 164,
+          "width": 390,
+          "height": 616,
+          "visible": true
+        },
+        ".topnav": {
+          "x": 0,
+          "y": 780,
+          "width": 390,
+          "height": 64,
+          "visible": true
+        },
+        "#designFilters": {
+          "x": 0,
+          "y": 96,
+          "width": 390,
+          "height": 52,
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "mobile-redevelopment",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "overflow": false,
+        "tiles": 25,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 52,
+          "visible": true
+        },
+        ".tabs": {
+          "x": 0,
+          "y": 52,
+          "width": 390,
+          "height": 44,
+          "visible": true
+        },
+        ".listpane": {
+          "x": 0,
+          "y": 413.453125,
+          "width": 390,
+          "height": 366.546875,
+          "visible": true
+        },
+        "#results": {
+          "x": 1,
+          "y": 556.453125,
+          "width": 388,
+          "height": 222.546875,
+          "visible": true
+        },
+        ".mapcanvas": {
+          "x": 0,
+          "y": 148,
+          "width": 390,
+          "height": 632,
+          "visible": true
+        },
+        "#detail": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        ".topnav": {
+          "x": 0,
+          "y": 780,
+          "width": 390,
+          "height": 64,
+          "visible": true
+        },
+        "#designFilters": {
+          "x": 0,
+          "y": 96,
+          "width": 390,
+          "height": 52,
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "layout-1280x800",
+      "metrics": {
+        "width": 1280,
+        "height": 800,
+        "overflow": false,
+        "tiles": 21,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 60,
+          "visible": true
+        },
+        ".tabs": {
+          "x": 0,
+          "y": 60,
+          "width": 1280,
+          "height": 48,
+          "visible": true
+        },
+        ".listpane": {
+          "x": 0,
+          "y": 108,
+          "width": 400,
+          "height": 692,
+          "visible": true
+        },
+        "#results": {
+          "x": 0,
+          "y": 317,
+          "width": 399,
+          "height": 483,
+          "visible": true
+        },
+        ".mapcanvas": {
+          "x": 400,
+          "y": 108,
+          "width": 880,
+          "height": 692,
+          "visible": true
+        },
+        "#detail": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        ".topnav": {
+          "x": 179.546875,
+          "y": 0,
+          "width": 307.34375,
+          "height": 59,
+          "visible": true
+        },
+        "#designFilters": {
+          "x": 0,
+          "y": 164,
+          "width": 399,
+          "height": 58,
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "layout-1024x768",
+      "metrics": {
+        "width": 1024,
+        "height": 768,
+        "overflow": false,
+        "tiles": 17,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 60,
+          "visible": true
+        },
+        ".tabs": {
+          "x": 0,
+          "y": 60,
+          "width": 1024,
+          "height": 48,
+          "visible": true
+        },
+        ".listpane": {
+          "x": 0,
+          "y": 108,
+          "width": 360,
+          "height": 660,
+          "visible": true
+        },
+        "#results": {
+          "x": 0,
+          "y": 317,
+          "width": 359,
+          "height": 451,
+          "visible": true
+        },
+        ".mapcanvas": {
+          "x": 360,
+          "y": 108,
+          "width": 664,
+          "height": 660,
+          "visible": true
+        },
+        "#detail": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        ".topnav": {
+          "x": 161.546875,
+          "y": 0,
+          "width": 271.34375,
+          "height": 59,
+          "visible": true
+        },
+        "#designFilters": {
+          "x": 0,
+          "y": 164,
+          "width": 359,
+          "height": 58,
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "layout-768x1024",
+      "metrics": {
+        "width": 768,
+        "height": 1024,
+        "overflow": false,
+        "tiles": 16,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 60,
+          "visible": true
+        },
+        ".tabs": {
+          "x": 0,
+          "y": 60,
+          "width": 768,
+          "height": 48,
+          "visible": true
+        },
+        ".listpane": {
+          "x": 0,
+          "y": 108,
+          "width": 320,
+          "height": 916,
+          "visible": true
+        },
+        "#results": {
+          "x": 0,
+          "y": 347.390625,
+          "width": 319,
+          "height": 676.609375,
+          "visible": true
+        },
+        ".mapcanvas": {
+          "x": 320,
+          "y": 108,
+          "width": 448,
+          "height": 916,
+          "visible": true
+        },
+        "#detail": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        ".topnav": {
+          "x": 145.046875,
+          "y": 0,
+          "width": 232.25,
+          "height": 59,
+          "visible": true
+        },
+        "#designFilters": {
+          "x": 0,
+          "y": 164,
+          "width": 319,
+          "height": 58,
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "layout-375x667",
+      "metrics": {
+        "width": 375,
+        "height": 667,
+        "overflow": false,
+        "tiles": 10,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 375,
+          "height": 52,
+          "visible": true
+        },
+        ".tabs": {
+          "x": 0,
+          "y": 52,
+          "width": 375,
+          "height": 44,
+          "visible": true
+        },
+        ".listpane": {
+          "x": 0,
+          "y": 519,
+          "width": 375,
+          "height": 84,
+          "visible": true
+        },
+        "#results": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        ".mapcanvas": {
+          "x": 0,
+          "y": 148,
+          "width": 375,
+          "height": 455,
+          "visible": true
+        },
+        "#detail": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        ".topnav": {
+          "x": 0,
+          "y": 603,
+          "width": 375,
+          "height": 64,
+          "visible": true
+        },
+        "#designFilters": {
+          "x": 0,
+          "y": 96,
+          "width": 375,
+          "height": 52,
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "layout-430x932",
+      "metrics": {
+        "width": 430,
+        "height": 932,
+        "overflow": false,
+        "tiles": 13,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 430,
+          "height": 52,
+          "visible": true
+        },
+        ".tabs": {
+          "x": 0,
+          "y": 52,
+          "width": 430,
+          "height": 44,
+          "visible": true
+        },
+        ".listpane": {
+          "x": 0,
+          "y": 784,
+          "width": 430,
+          "height": 84,
+          "visible": true
+        },
+        "#results": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        ".mapcanvas": {
+          "x": 0,
+          "y": 148,
+          "width": 430,
+          "height": 720,
+          "visible": true
+        },
+        "#detail": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        ".topnav": {
+          "x": 0,
+          "y": 868,
+          "width": 430,
+          "height": 64,
+          "visible": true
+        },
+        "#designFilters": {
+          "x": 0,
+          "y": 96,
+          "width": 430,
+          "height": 52,
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "layout-844x390",
+      "metrics": {
+        "width": 844,
+        "height": 390,
+        "overflow": false,
+        "tiles": 13,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 44,
+          "visible": true
+        },
+        ".tabs": {
+          "x": 0,
+          "y": 44,
+          "width": 844,
+          "height": 40,
+          "visible": true
+        },
+        ".listpane": {
+          "x": 0,
+          "y": 84,
+          "width": 310,
+          "height": 306,
+          "visible": true
+        },
+        "#results": {
+          "x": 0,
+          "y": 271.390625,
+          "width": 309,
+          "height": 118.609375,
+          "visible": true
+        },
+        ".mapcanvas": {
+          "x": 310,
+          "y": 84,
+          "width": 534,
+          "height": 306,
+          "visible": true
+        },
+        "#detail": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "visible": false
+        },
+        ".topnav": {
+          "x": 139.53125,
+          "y": 0,
+          "width": 232.25,
+          "height": 43,
+          "visible": true
+        },
+        "#designFilters": {
+          "x": 0,
+          "y": 124,
+          "width": 309,
+          "height": 42,
+          "visible": true
+        }
+      }
+    }
+  ],
+  "errors": []
+}

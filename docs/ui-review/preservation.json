@@ -1,0 +1,12 @@
+{
+  "base": "494780e6b5c794105b898ad2cfa55e6033bcf9c1",
+  "data_files_unchanged": 916,
+  "protected_files_unchanged": 922,
+  "data_changed": false,
+  "key_config_changed": false,
+  "main_changed": false,
+  "deployment_requested": false,
+  "checked_functional_tests": 25,
+  "real_iphone_checked": false,
+  "gpt_integration_md": "Not found in current repo or retrievable attachments. New field integration not inferred."
+}

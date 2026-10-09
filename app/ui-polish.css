@@ -59,3 +59,23 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,.s
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 /* Short landscape screens: keep count and source-info trigger on one row. */
 @media(min-width:701px) and (max-height:520px){#mapPage .listhead{flex-wrap:nowrap;gap:5px}#mapPage .listhead strong{font-size:12px;white-space:nowrap}#mapPage #count{font-size:11px;white-space:nowrap}}
+
+
+/* Follow-up visual review: map remains primary while collapsed sheet shows real results */
+@media(min-width:701px){#mapPage .design-filterbar .filter-chip-scroll{scrollbar-width:thin}}
+@media(max-width:700px){
+ #mapPage .workspace .listpane{height:124px}
+ #mapPage .mobile-sheet-hint{display:flex;flex-direction:column;gap:2px;margin:0 16px 8px;font-size:13px;line-height:1.5;overflow:hidden}
+ #mapPage .mobile-sheet-hint strong{font-weight:700;color:#183859;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #mapPage .mobile-sheet-hint span{color:#65758a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #mapPage .workspace.mapexpanded .mobile-sheet-hint{display:none}
+}
+/* Short landscape: compress source indicator rather than stealing the result list. */
+@media(min-width:701px) and (max-height:520px){
+ #mapPage #homeCalendarStatus{padding:2px 8px 4px}
+ #mapPage #homeCalendarStatus .home-calendar-link{display:flex;align-items:center;gap:5px;padding:4px 6px;min-height:34px}
+ #mapPage #homeCalendarStatus .home-calendar-link p{margin:0!important;min-width:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:10px!important}
+ #mapPage #homeCalendarStatus .home-calendar-link>div{display:flex;flex-wrap:nowrap;gap:3px}
+ #mapPage #homeCalendarStatus .home-calendar-link button{min-height:26px;padding:2px 5px;font-size:11px}
+ #mapPage #homeCalendarStatus .home-calendar-link a,#mapPage #homeCalendarStatus .home-calendar-link small{display:none}
+}

@@ -1,0 +1,12 @@
+/* Small source indicator only: map layout and original data styles are unchanged. */
+#homeCalendarStatus{order:6;padding:0 16px 8px;flex:0 0 auto}
+.home-calendar-link{background:#f5f8fc;border:1px solid #e0e8f2;border-radius:9px;padding:8px 10px;color:#425b76;font-size:12px;line-height:1.5}
+.home-calendar-link p{margin:0 0 5px!important;font-size:12px!important;line-height:1.5!important}
+.home-calendar-link>div{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.home-calendar-link button,.home-calendar-link a{font-size:12px;min-height:32px;line-height:1.4;padding:5px 8px;border:1px solid #cddaea;border-radius:6px;background:#fff;color:#174777;text-decoration:none}
+.home-calendar-link small{display:block;margin-top:4px}
+.home-calendar-link.is-fallback{background:#fff8e9;border-color:#eddaae;color:#74592a}
+.calendar-dialog-head .home-calendar-link{margin-top:8px;max-width:100%}
+.calendar-dialog-head{align-items:flex-start}
+.calendar-dialog-head>[data-calendar-close]{flex-shrink:0}
+@media(max-width:700px){#mapPage .workspace:not(.mapexpanded) #homeCalendarStatus,#mapPage .workspace.has-detail #homeCalendarStatus{display:none}#homeCalendarStatus{padding:0 12px 6px}.home-calendar-link button,.home-calendar-link a{min-height:36px}.calendar-dialog-head .home-calendar-link{padding:6px 8px}.calendar-dialog-head .home-calendar-link p{font-size:11px!important}}

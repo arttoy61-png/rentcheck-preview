@@ -33,7 +33,7 @@ function switchTab(tab){
  state.kakaoCameras||={};
  if(changedFromCurrent)delete state.kakaoCameras[tab];
  else if(window.RentKakaoSession?.isActive())state.kakaoCameras[tab]=window.RentKakaoMap.camera();
- navigate({...restored,tab,sheetCollapsed:false,showMap:false,windowScroll:0});
+ const mobile=window.matchMedia?.('(max-width:700px)').matches;navigate({...restored,tab,expanded:mobile&&tab==='housing',sheetCollapsed:false,showMap:false,windowScroll:0});
 }
 function closeDetail(){++selectionEpoch;navigate({selected:null,detailOpen:false,sheetCollapsed:false,showMap:false},{push:false});}
 function back(){if(history.state?.schema===9&&history.length>1)history.back();else navigate({page:'map',selected:null,article:null},{push:false});}
@@ -179,7 +179,7 @@ function updateDetailControl(){const mobile=window.matchMedia?.('(max-width:700p
 function renderDesignControls(){
  if(!$('#designFilters'))return;placeDesignControls();$('#designFilters').setAttribute('aria-busy','false');
  let extra='';if(state.tab==='redevelopment')extra=designSelect('designProjectLayer','#projectLayer','자료 구분')+designSelect('designProjectType','#projectType','사업유형')+designSelect('designProjectStage','#projectStage','진행단계');else if(state.tab==='housing')extra=designSelect('designNoticeCategory','#noticeCategory','공고유형')+designSelect('designNoticeStatus','#noticeStatus','접수상태');else if(state.tab==='sale')extra=designSelect('designSaleType','#saleType','공급유형')+designSelect('designSaleStatus','#saleStatus','접수상태');else if(state.tab==='transactions')extra=designSelect('designDong','#dong','동 전체');
- $('#designFilters').innerHTML=`<div class="filter-chip-scroll">${designSelect('designDistrict','#district','지역')}${extra}</div><button data-design-more aria-label="추가 조건과 목록">☷</button>`;
+ $('#designFilters').innerHTML=`<div class="filter-chip-scroll">${designSelect('designDistrict','#district','지역')}${extra}</div><button data-design-more aria-label="필터">필터</button>`;
  for(const [id,key] of [['designDistrict','district'],['designProjectLayer','projectLayer'],['designProjectType','projectType'],['designProjectStage','projectStage'],['designNoticeCategory','noticeCategory'],['designNoticeStatus','noticeStatus'],['designSaleType','saleType'],['designSaleStatus','saleStatus'],['designDong','dong']])if($('#'+id))$('#'+id).value=state[key];
  $('#searchBounds').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7a9 9 0 1 0 1 8M20 2v5h-5"/></svg><span>'+({redevelopment:'이 지도에서 현장 찾기',housing:'이 지도에서 주택 찾기',sale:'이 지도에서 분양 찾기',auction:'이 지도에서 경매 찾기',transactions:'이 지도에서 단지 찾기'}[state.tab])+'</span>';
  const sheetCount=$('#count')?.textContent?.trim()||'';const sheetFirst=$('#results .result h3,#results .site-card h3')?.textContent?.trim()||'';$('#sheetHint').innerHTML='<strong>'+esc(sheetCount||'전체 목록을 펼쳐 확인')+'</strong>'+'<span>'+esc(sheetFirst||'목록을 펼쳐 현장·공고를 고르세요')+'</span>';
@@ -214,6 +214,7 @@ homeCalendarArchive=publicNotices;mergeProjectResources();const districts=geo?.f
 if(history.state?.schema===9)state={...defaults,...history.state.state};else{try{const saved=JSON.parse(sessionStorage.getItem('rentcheck-renewal-state-review9'));if(saved)state={...defaults,...saved};}catch{}state.selected=null;state.detailOpen=false;state.page='map';state.article=null;if(location.hash){const route=parseRoute(location.hash);if(route.page==='map'&&route.tab!==state.tab){const tabState=state.tabStates?.[route.tab];for(const k of tabFields)state[k]=clone(tabState?.[k]??defaults[k]);if(!tabState&&route.tab==='housing')state.district='all';}Object.assign(state,route);}}
 // One-time migration of pre-fix browser state: old camera snapshots may describe the previous district.
 // Preserve all region/filter/selection data, then fit the selected region instead of trusting that camera.
+if(window.matchMedia?.('(max-width:700px)').matches&&state.tab==='housing'&&!state.selected&&!state.regionChosen)state.expanded=true;
 if(state.mapCameraStateVersion!==1){state.kakaoCameras={};state.mapCameraStateVersion=1;}
 if(!state.selected&&!state.kakaoCameras?.[state.tab]&&state.district!=='all'&&JSON.stringify(state.viewBox)==='[0,0,900,640]')state.viewBox=fitDistrict(state.district);
 buildMap();history.replaceState({rentcheck:true,schema:9,state:serializedState()},'',routeFor());await render();$('#results').setAttribute('aria-busy','false');refreshHomeCalendar();}

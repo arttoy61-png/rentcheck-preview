@@ -1,0 +1,64 @@
+name: Import Sites34 and publish isolated preview
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+concurrency:
+  group: rentcheck-preview-publish
+  cancel-in-progress: false
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      source_sha: ${{ steps.commit.outputs.source_sha }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Extract the approved source archive once
+        run: python3 scripts/import-sites34.py
+      - name: Check JavaScript syntax
+        run: |
+          node --check app/app.js
+          node --check app/kakao-session.js
+          node --check app/kakao-map-engine.js
+          node --check app/kakao-autoconnect.js
+      - name: Commit all extracted source and data files
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app README.txt START_WINDOWS.bat "검수요약.txt" UPLOAD_RECEIPT.json
+          if ! git diff --cached --quiet; then
+            git commit --quiet -m "Upload all extracted Sites34 files and enable automatic Kakao map connection"
+            git push origin HEAD:main
+          fi
+          echo "source_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "Committed source files: $(git ls-files app | wc -l)"
+  pages:
+    needs: source
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.source.outputs.source_sha }}
+      - name: Configure isolated GitHub Pages site
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: app
+      - name: Deploy review site without changing rent-check.kr
+        id: deployment
+        uses: actions/deploy-pages@v4

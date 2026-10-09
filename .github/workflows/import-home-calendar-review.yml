@@ -31,7 +31,8 @@ jobs:
           assert git('branch', '--show-current') == 'review/home-calendar-20261009'
           assert git('rev-parse', 'origin/main') == base, 'Main advanced; compare changes before retrying.'
           subprocess.run(['git', 'merge-base', '--is-ancestor', base, 'HEAD'], check=True)
-          before = {p: hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in git('ls-files').splitlines() if p not in allowed}
+          tracked = subprocess.check_output(['git', 'ls-files', '-z']).decode('utf-8').split('\0')
+          before = {p: hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in tracked if p and p not in allowed}
           url = 'https://d2ol7oe51mr4n9.cloudfront.net/user_3IDBI0waiBn60lYtWWKmKzM268s/6e6f6ac2-e641-4c9b-89f4-8fa3fa6ff5e6.zip'
           req = urllib.request.Request(url, headers={'User-Agent': 'RentCheck-approved-calendar-review/1.0'})
           with urllib.request.urlopen(req, timeout=45) as response:

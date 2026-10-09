@@ -21,8 +21,8 @@
       "district": "강동구",
       "source_total": 58,
       "collected_total": 58,
-      "detail_verified_total": 40,
-      "dated_event_total": 1385,
+      "detail_verified_total": 46,
+      "dated_event_total": 1802,
       "coordinates_verified_total": 0,
       "geometry_verified_total": 7
     },
@@ -246,9 +246,9 @@
   },
   "coordinates_verified_total": 0,
   "map_reference_total": 376,
-  "dated_project_total": 148,
-  "dated_event_total": 4739,
-  "detail_verified_total": 191,
+  "dated_project_total": 154,
+  "dated_event_total": 5156,
+  "detail_verified_total": 197,
   "record_updated_at_available": false,
   "page_sources": [
     {
@@ -315,7 +315,7 @@
   "unavailable_fields": [
     "공식 원문 수정일",
     "공식 목록 좌표",
-    "사업장 경계 GeoJSON"
+    "전체 사업장에 대한 검증 경계 GeoJSON(1,015등록행 미확인)"
   ],
   "access_restricted_scope": [
     "정보공개 원문 중 조합원/토지등소유자 권한이 필요한 메뉴는 접근하지 않음"

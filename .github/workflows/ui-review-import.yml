@@ -1,0 +1,41 @@
+name: Commit approved UI review files only
+on:
+  push:
+    branches: [review/ui-20261009]
+    paths:
+      - .github/workflows/ui-review-import.yml
+      - scripts/import-ui-review.py
+permissions:
+  contents: write
+concurrency:
+  group: rentcheck-ui-review-import
+  cancel-in-progress: false
+jobs:
+  commit:
+    if: github.repository == 'arttoy61-png/rentcheck-preview' && github.ref == 'refs/heads/review/ui-20261009'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: review/ui-20261009
+          fetch-depth: 0
+      - name: Check latest data baseline and apply reviewed UI patch
+        run: python3 scripts/import-ui-review.py
+      - name: Verify JavaScript syntax
+        run: |
+          node --check app/app.js
+          node --check app/kakao-map-engine.js
+          node --check app/ui-polish.js
+      - name: Commit to review branch without deployment
+        run: |
+          set -eu
+          test "$(git branch --show-current)" = 'review/ui-20261009'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if ! git diff --cached --quiet; then
+            git commit -m 'Polish map-first UI and fix region camera restoration; preserve dot data'
+            git push origin HEAD:refs/heads/review/ui-20261009
+          fi
+          echo "Review commit: $(git rev-parse HEAD)"
+          echo 'No main update, merge, Pages dispatch or production deployment.'

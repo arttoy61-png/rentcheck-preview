@@ -1,0 +1,40 @@
+/* Rent Check mobile IA pilot. No production HOME changes. */
+@media(max-width:700px){
+  body:has(#mapPage:not([hidden])){height:100dvh!important;overflow:hidden!important}
+  #mapPage:not([hidden]){display:flex!important;flex-direction:column!important;flex:1 1 auto!important;min-height:0!important;overflow:hidden!important}
+  #mapPage .workspace{position:relative!important;flex:1 1 auto!important;min-height:0!important;overflow:hidden!important}
+  #mapPage[data-mobile-screen=map] .workspace .listpane,
+  #mapPage[data-mobile-screen=map] .workspace .detailpane{display:none!important}
+  #mapPage[data-mobile-screen=map] .workspace .mapsection{display:flex!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-height:none!important;z-index:1!important}
+  #mapPage[data-mobile-screen=map] .workspace .mapcanvas{flex:1 1 auto!important;min-height:0!important}
+  #mapPage[data-mobile-screen=map] .workspace #kakaoMap{width:100%!important;height:100%!important}
+  #mapPage[data-mobile-screen=map] .workspace .mobile-sheet-hint,
+  #mapPage[data-mobile-screen=map] .workspace .sheet-handle{display:none!important}
+  #mapPage[data-mobile-screen=map] .maphead{display:none!important}
+  #mapPage[data-mobile-screen=map] #mobileNextPage:not([hidden]){display:block!important;position:absolute!important;z-index:90!important;bottom:18px!important;left:16px!important;right:16px!important}
+  #mobileNextPage button{display:flex!important;justify-content:space-between!important;align-items:center!important;width:100%!important;min-height:62px!important;padding:12px 18px!important;border:1px solid #cfddf0!important;border-radius:14px!important;background:#fff!important;color:#133c68!important;box-shadow:0 4px 18px #163b6428!important;font-size:17px!important;font-weight:800!important}
+  #mapPage[data-mobile-screen=list] .workspace .mapsection,
+  #mapPage[data-mobile-screen=list] .workspace .detailpane{display:none!important}
+  #mapPage[data-mobile-screen=list] .workspace .listpane{display:flex!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-height:none!important;flex-direction:column!important;overflow:hidden!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:#fff!important}
+  #mapPage[data-mobile-screen=list] .workspace .listtop{min-height:56px!important;height:56px!important;padding:7px 16px!important}
+  #mapPage[data-mobile-screen=list] .workspace #results{flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;padding-bottom:30px!important}
+  #mapPage[data-mobile-screen=list] #mobileBackMap:not([hidden]){display:block!important}
+  #mapPage[data-mobile-screen=list] .workspace .mobile-sheet-hint,
+  #mapPage[data-mobile-screen=list] .workspace .sheet-handle,
+  #mapPage[data-mobile-screen=list] .workspace #mobileToggle{display:none!important}
+  #mobileBackMap{min-height:40px;padding:7px 12px;border:1px solid #cbdff7;border-radius:9px;background:#fff;color:#155ca9;font-weight:700}
+  #mapPage[data-mobile-screen=detail] .tabs,
+  #mapPage[data-mobile-screen=detail] .design-filterbar,
+  #mapPage[data-mobile-screen=detail] .workspace .mapsection,
+  #mapPage[data-mobile-screen=detail] .workspace .listpane{display:none!important}
+  #mapPage[data-mobile-screen=detail] .workspace .detailpane{display:flex!important;position:absolute!important;inset:0!important;top:0!important;width:100%!important;height:100%!important;max-height:none!important;flex-direction:column!important;overflow:hidden!important;background:#fff!important;z-index:50!important;border:0!important;border-radius:0!important}
+  #mapPage[data-mobile-screen=detail] .detailtop{position:relative!important;flex:0 0 56px!important;padding:8px 16px!important;border-bottom:1px solid #e1e9f2!important}
+  #mapPage[data-mobile-screen=detail] #detailBody{flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;padding:18px 18px 70px!important}
+  #mapPage[data-mobile-screen=detail] #closeDetail{min-height:42px!important;color:#145cab!important;font-size:15px!important;font-weight:800!important}
+  #mapPage[data-mobile-screen=detail] #collapseDetail{display:none!important}
+  #mapPage[data-mobile-screen=detail] .workspace .mapsection{display:none!important}
+  #mapPage[data-mobile-screen=detail] .workspace .listpane{display:none!important}
+  #mapPage[data-mobile-screen=detail] .workspace .detailpane{display:flex!important}
+  #mapPage[data-mobile-screen=detail] .workspace .detailpane #detailBody{overflow-y:auto!important}
+  #mapPage[data-mobile-screen=detail] .workspace .detailpane #detailBody [data-project-map]{position:static!important;width:100%!important;margin-top:16px!important}
+}

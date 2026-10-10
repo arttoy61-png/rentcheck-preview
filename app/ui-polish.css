@@ -141,3 +141,11 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,.s
  }
  #mapPage .workspace.has-detail .map-unavailable{margin:12px 0 0;padding:11px 12px;border-radius:10px;background:#f5f7fa}
 }
+
+
+/* Official-map/data alignment */
+#mapPage .map-badge{margin-left:5px;background:#e9f3ff;color:#155fc7;border:1px solid #cfe1fb}
+.project-overview dl{display:grid;grid-template-columns:minmax(105px,.8fr) 1.2fr;gap:7px 12px;margin:10px 0 4px}.project-overview dt{color:#66778a}.project-overview dd{margin:0;font-weight:650}
+.project-bids{margin-top:18px}.bid-row{padding:11px 0;border-bottom:1px solid var(--ui-line)}.bid-row strong,.bid-row small{display:block}.bid-row small{margin:4px 0 7px;color:#687b90;font-size:12px}
+.history-item .action{display:inline-flex;min-height:30px;padding:3px 7px;font-size:11px;margin-top:4px}
+@media(max-width:700px){#mapPage .map-badge{font-size:10px}.project-overview dl{grid-template-columns:110px minmax(0,1fr);font-size:13px}.bid-row{padding:10px 0}}

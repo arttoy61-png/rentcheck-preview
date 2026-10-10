@@ -96,16 +96,24 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,.s
 
  /* Housing opens as a list page; redevelopment changes to a list page only after List is tapped. */
  #mapPage .workspace.mapexpanded[data-topic=housing] .mapsection,
- #mapPage .workspace.mapexpanded[data-topic=redevelopment] .mapsection{display:none!important}
+ #mapPage .workspace.mapexpanded[data-topic=redevelopment] .mapsection,
+ #mapPage .workspace.mapexpanded[data-topic=sale] .mapsection,
+ #mapPage .workspace.mapexpanded[data-topic=auction] .mapsection{display:none!important}
  #mapPage .workspace.mapexpanded[data-topic=housing] .listpane,
- #mapPage .workspace.mapexpanded[data-topic=redevelopment] .listpane{
+ #mapPage .workspace.mapexpanded[data-topic=redevelopment] .listpane,
+ #mapPage .workspace.mapexpanded[data-topic=sale] .listpane,
+ #mapPage .workspace.mapexpanded[data-topic=auction] .listpane{
    position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-height:none!important;
    border:0!important;border-radius:0!important;box-shadow:none!important;padding-bottom:0!important
  }
  #mapPage .workspace.mapexpanded[data-topic=housing] .listtop,
- #mapPage .workspace.mapexpanded[data-topic=redevelopment] .listtop{padding:4px 16px;min-height:46px;height:46px}
+ #mapPage .workspace.mapexpanded[data-topic=redevelopment] .listtop,
+ #mapPage .workspace.mapexpanded[data-topic=sale] .listtop,
+ #mapPage .workspace.mapexpanded[data-topic=auction] .listtop{padding:4px 16px;min-height:46px;height:46px}
  #mapPage .workspace.mapexpanded[data-topic=housing] #results,
- #mapPage .workspace.mapexpanded[data-topic=redevelopment] #results{padding-bottom:24px}
+ #mapPage .workspace.mapexpanded[data-topic=redevelopment] #results,
+ #mapPage .workspace.mapexpanded[data-topic=sale] #results,
+ #mapPage .workspace.mapexpanded[data-topic=auction] #results{padding-bottom:24px}
 
  /* Source freshness still loads automatically; keep it out of the primary mobile reading path. */
  #mapPage .workspace[data-topic=housing] #homeCalendarStatus{display:none!important}
@@ -141,3 +149,11 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,.s
  }
  #mapPage .workspace.has-detail .map-unavailable{margin:12px 0 0;padding:11px 12px;border-radius:10px;background:#f5f7fa}
 }
+
+
+/* Official-map/data alignment */
+#mapPage .map-badge{margin-left:5px;background:#e9f3ff;color:#155fc7;border:1px solid #cfe1fb}
+.project-overview dl{display:grid;grid-template-columns:minmax(105px,.8fr) 1.2fr;gap:7px 12px;margin:10px 0 4px}.project-overview dt{color:#66778a}.project-overview dd{margin:0;font-weight:650}
+.project-bids{margin-top:18px}.bid-row{padding:11px 0;border-bottom:1px solid var(--ui-line)}.bid-row strong,.bid-row small{display:block}.bid-row small{margin:4px 0 7px;color:#687b90;font-size:12px}
+.history-item .action{display:inline-flex;min-height:30px;padding:3px 7px;font-size:11px;margin-top:4px}
+@media(max-width:700px){#mapPage .map-badge{font-size:10px}.project-overview dl{grid-template-columns:110px minmax(0,1fr);font-size:13px}.bid-row{padding:10px 0}}

@@ -3,7 +3,7 @@
 let boundaryOverlays=[],boundaryKey='',cameraUpdateDepth=0;
 let map,overlays=[],projects=[],opts={},callbacks={},resolved=new Map(),statusNode,lastTab=null,lastSelected=null,lastBox='',lastQuery='',resolving=false,addressAttempts=new Set();
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const valid=p=>Number.isFinite(Number(p.lat))&&Number.isFinite(Number(p.lng))&&p.lat>37&&p.lat<38&&p.lng>126&&p.lng<128;
+const valid=p=>!!p&&Number.isFinite(Number(p.lat))&&Number.isFinite(Number(p.lng))&&p.lat>37&&p.lat<38&&p.lng>126&&p.lng<128;
 function camera(){if(!map)return null;const c=map.getCenter(),b=map.getBounds();return{lat:c.getLat(),lng:c.getLng(),level:map.getLevel(),bounds:[b.getSouthWest().getLng(),b.getSouthWest().getLat(),b.getNorthEast().getLng(),b.getNorthEast().getLat()]};}
 function setCamera(c){if(!map||!valid(c))return;map.setLevel(c.level||5);map.setCenter(new kakao.maps.LatLng(c.lat,c.lng));}
 function resize(){if(!map)return;const center=map.getCenter();map.relayout();map.setCenter(center);}

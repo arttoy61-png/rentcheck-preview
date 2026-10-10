@@ -125,3 +125,19 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,.s
  #mapPage .workspace.has-detail #detailBody{padding:16px 18px 32px!important}
  #mapPage .workspace.has-detail #closeDetail{font-weight:700;background:#fff;border-color:transparent;padding-left:0}
 }
+
+
+/* Map/list count honesty and thumb-reachable map action */
+@media(max-width:700px){
+ #mapPage .mobile-sheet-hint{gap:1px}
+ #mapPage .mobile-sheet-hint strong{font-size:13px;color:#183859}
+ #mapPage .mobile-sheet-hint span{font-size:11px;color:#6b7b8e}
+ #mapPage .workspace.has-detail #detailBody:has([data-project-map]){padding-bottom:94px!important}
+ #mapPage .workspace.has-detail #detailBody [data-project-map]{
+   position:fixed!important;left:16px!important;right:16px!important;bottom:calc(14px + env(safe-area-inset-bottom,0px))!important;
+   width:auto!important;z-index:110!important;min-height:50px!important;border-radius:12px!important;
+   background:var(--ui-blue)!important;color:#fff!important;border-color:var(--ui-blue)!important;
+   box-shadow:0 6px 20px #102b4938!important;font-size:16px!important;font-weight:750!important
+ }
+ #mapPage .workspace.has-detail .map-unavailable{margin:12px 0 0;padding:11px 12px;border-radius:10px;background:#f5f7fa}
+}

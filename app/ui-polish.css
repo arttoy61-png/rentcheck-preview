@@ -157,3 +157,103 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,.s
 .project-bids{margin-top:18px}.bid-row{padding:11px 0;border-bottom:1px solid var(--ui-line)}.bid-row strong,.bid-row small{display:block}.bid-row small{margin:4px 0 7px;color:#687b90;font-size:12px}
 .history-item .action{display:inline-flex;min-height:30px;padding:3px 7px;font-size:11px;margin-top:4px}
 @media(max-width:700px){#mapPage .map-badge{font-size:10px}.project-overview dl{grid-template-columns:110px minmax(0,1fr);font-size:13px}.bid-row{padding:10px 0}}
+
+
+/* Readability pass based on map-first reference: clearer hierarchy, not a literal copy. */
+:root{--ui-panel:430px;--ui-header:64px;--ui-tabs:52px;--ui-navy:#0c3c78;--ui-blue:#146ff5;--ui-ink:#102a4a;--ui-muted:#68798e;--ui-line:#dfe6ef}
+body>header{background:var(--ui-navy)!important;color:#fff!important;border-bottom:0!important;box-shadow:none!important}
+header .brand{color:#fff!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.7px}
+header .topnav button{color:#dce9fb!important}
+header .topnav button[aria-current=page]{color:#fff!important;border-color:#66a3ff!important}
+header .topnav svg{color:currentColor}
+.header-search{max-width:340px!important}
+.header-search input{background:#fff!important;border:0!important;border-radius:22px!important;min-height:40px!important;color:#18334f!important;padding:8px 15px!important}
+.desktop-map-settings{color:#fff!important;background:#ffffff14!important;border-color:#ffffff40!important}
+#mapPage .tabs{background:#fff!important;border-bottom:1px solid var(--ui-line)!important}
+#mapPage .tabs button{font-size:16px!important;font-weight:650!important;color:#64748b!important}
+#mapPage .tabs button[aria-selected=true]{color:var(--ui-blue)!important;background:#fff!important;border-bottom-color:var(--ui-blue)!important}
+#mapPage .listpane{background:#fff!important}
+#mapPage .listtop h1{font-size:27px!important;font-weight:800!important;color:#102b49!important}
+#mapPage .design-filterbar{background:#fff!important;border-bottom:1px solid #eef2f6!important}
+#mapPage .design-filterbar .filter-chip-scroll{gap:9px!important}
+#mapPage .design-filterbar select{background:#fff!important;border:1px solid #d9e1ea!important;border-radius:10px!important;box-shadow:0 1px 2px #102b4906!important;font-weight:650!important;color:#18334f!important}
+#mapPage #designProjectLayer{display:none!important}
+#mapPage .subnav{background:#fff!important;border-top:1px solid #eef2f6!important;border-bottom:1px solid #e7edf4!important;margin:0!important;padding:0 8px!important}
+#mapPage .subnav button{position:relative!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:2px!important;min-height:72px!important;font-size:13px!important;font-weight:650!important;color:#6d7c91!important}
+#mapPage .subnav button::before{font-size:20px!important;line-height:1!important;color:#7d8ca0}
+#mapPage .subnav button[data-sub=sites]::before{content:'●'}
+#mapPage .subnav button[data-sub=changes]::before{content:'◷'}
+#mapPage .subnav button[data-sub=calculator]::before{content:'▦'}
+#mapPage .subnav button[data-sub=related]::before{content:'▤'}
+#mapPage .subnav button[aria-current=page]{color:var(--ui-blue)!important}
+#mapPage .subnav button[aria-current=page]::before{color:var(--ui-blue)!important}
+#mapPage .site-card{border:1px solid #dfe6ef!important;border-radius:12px!important;padding:15px!important;margin:0 0 12px!important}
+#mapPage .site-card:hover{border-color:#8eb9f6!important;background:#f8fbff!important}
+#mapPage .site-select{align-items:center!important;gap:14px!important}
+#mapPage .site-thumb{flex:0 0 78px!important;height:82px!important;border-radius:9px!important;background:#f0f4f8!important;border:1px solid #e4ebf3!important;color:#7b8ba0!important}
+#mapPage .site-thumb.mapped{background:#edf6ff!important;border-color:#cfe1fb!important;color:#196ce3!important}
+#mapPage .site-thumb b{font-size:27px!important;color:inherit!important}
+#mapPage .site-thumb small{font-size:10px!important;font-weight:700!important}
+#mapPage .site-copy h3{font-size:19px!important;line-height:1.4!important;margin:5px 0 7px!important}
+#mapPage .site-copy p{font-size:12px!important;margin-top:7px!important}
+#mapPage .site-detail-link{min-height:36px!important;border-radius:8px!important;background:#fff!important;color:var(--ui-blue)!important;border-color:#cfe0f5!important;font-size:13px!important}
+.kakao-site-point .site-pin.labelled{width:auto!important;min-width:48px!important;height:34px!important;padding:0 11px!important;border-radius:10px!important;background:#0b54b5!important;border:3px solid #fff!important;font-size:13px!important;line-height:28px!important;white-space:nowrap!important;box-shadow:0 3px 10px #123b6638!important}
+.kakao-site-point .site-pin.labelled.active{background:#073f8d!important;min-width:54px!important;height:38px!important;box-shadow:0 0 0 4px #1d73e626,0 4px 13px #0f37614a!important}
+.kakao-site-point .cluster-pin{background:#fff!important;color:#0b54b5!important;border:2px solid #0b54b5!important}
+#mapPage .map-callout{min-width:260px!important;padding:14px 16px!important;border-radius:14px!important;border:1px solid #d4e2f5!important;box-shadow:0 10px 32px #13395a28!important}
+#mapPage .map-callout strong{font-size:18px!important;font-weight:800!important}
+#mapPage .callout-detail{background:var(--ui-blue)!important;color:#fff!important;border:0!important;border-radius:9px!important;margin-top:4px!important}
+
+/* Desktop: dense, legible list + generous map. */
+@media(min-width:701px){
+ #mapPage .tabs{padding-left:var(--ui-panel)!important;height:52px!important}
+ #mapPage .workspace[data-topic],#mapPage .workspace[data-topic]:not(.has-detail),#mapPage .workspace[data-topic].has-detail{grid-template-columns:var(--ui-panel) minmax(0,1fr)!important}
+ #mapPage .listtop{height:76px!important;min-height:76px!important;padding:22px 20px 8px!important}
+ #mapPage .design-filterbar{padding:10px 18px!important}
+ #mapPage .design-filterbar select{min-height:46px!important;font-size:15px!important;max-width:150px!important}
+ #mapPage .design-filterbar>button{min-height:46px!important}
+ #mapPage #results{padding:14px 18px 24px!important}
+ #mapPage .maphead{top:18px!important;left:20px!important;background:#fff!important;border-radius:18px!important}
+ #mapPage .bounds{top:18px!important;min-height:46px!important;background:#fff!important;font-weight:700!important}
+}
+
+/* Mobile: title/filter/map/sheet hierarchy follows the supplied reference. */
+@media(max-width:700px){
+ :root{--ui-header:56px;--ui-tabs:48px}
+ body>header{height:56px!important;min-height:56px!important;flex:0 0 56px!important;padding:0 18px!important}
+ header .brand{font-size:25px!important}
+ .mobile-header-actions button{color:#fff!important}
+ #mapPage .tabs{height:48px!important;min-height:48px!important;flex-basis:48px!important}
+ #mapPage .tabs button{font-size:15px!important;padding:10px 0!important}
+ #mapPage>.design-filterbar{height:66px!important;min-height:66px!important;flex-basis:66px!important;padding:8px 12px!important;box-shadow:0 2px 7px #102b4909!important}
+ #mapPage .design-filterbar .filter-chip-scroll{display:grid!important;grid-template-columns:1fr 1.18fr 1.18fr!important;gap:8px!important;overflow:visible!important;flex:1!important}
+ #mapPage .design-filterbar select{display:none!important;max-width:none!important;width:100%!important;height:48px!important;min-height:48px!important;font-size:15px!important;padding:6px 25px 6px 10px!important;border-radius:11px!important}
+ #mapPage .design-filterbar #designDistrict{display:block!important}
+ #mapPage:has(.workspace[data-topic=redevelopment]) #designProjectType,
+ #mapPage:has(.workspace[data-topic=redevelopment]) #designProjectStage,
+ #mapPage:has(.workspace[data-topic=housing]) #designNoticeCategory,
+ #mapPage:has(.workspace[data-topic=housing]) #designNoticeStatus,
+ #mapPage:has(.workspace[data-topic=sale]) #designSaleType,
+ #mapPage:has(.workspace[data-topic=sale]) #designSaleStatus{display:block!important}
+ #mapPage .design-filterbar>button{flex:0 0 52px!important;width:52px!important;height:48px!important;min-height:48px!important;border-radius:11px!important;font-size:0!important;background:#fff!important}
+ #mapPage .design-filterbar>button::before{content:'☷';font-size:23px!important;color:#183b66}
+ #mapPage .workspace:not(.mapexpanded):not(.has-detail) .listpane{height:124px!important;border-radius:18px 18px 0 0!important;box-shadow:0 -4px 18px #102b4917!important}
+ #mapPage .sheet-handle{display:block!important;width:34px!important;height:4px!important;min-height:4px!important;border:0!important;border-radius:4px!important;background:#bdc8d6!important;margin:8px auto 3px!important}
+ #mapPage .listtop{height:49px!important;min-height:49px!important;padding:4px 16px!important}
+ #mapPage .listtop h1{font-size:21px!important;font-weight:800!important;color:#102b49!important}
+ #mapPage #mobileToggle{font-size:13px!important;font-weight:600!important;color:#65768a!important;min-width:76px!important}
+ #mapPage .mobile-sheet-hint{display:flex!important;flex-direction:column!important;gap:2px!important;margin:0 16px 10px!important}
+ #mapPage .mobile-sheet-hint strong{font-size:13px!important;color:#173653!important}
+ #mapPage .mobile-sheet-hint span{font-size:12px!important;color:#8190a2!important}
+ #mapPage .kakao-connected .kakao-map-status{display:none!important}
+ #mapPage .bounds{top:20px!important;min-height:45px!important;border-radius:24px!important;font-weight:700!important;background:#fff!important;box-shadow:0 4px 16px #183c6021!important}
+ #mapPage .zoom button{width:46px!important;height:46px!important;border-radius:12px!important}
+ .kakao-site-point .site-pin.labelled{height:32px!important;min-width:45px!important;padding:0 9px!important;font-size:12px!important;border-radius:9px!important}
+ .kakao-site-point .site-pin.labelled.active{height:36px!important}
+ #mapPage .workspace.mapexpanded .listpane{border-radius:0!important}
+ #mapPage .workspace.mapexpanded .subnav{display:flex!important;min-height:62px!important}
+ #mapPage .workspace.mapexpanded .subnav button{min-height:62px!important;font-size:12px!important}
+ #mapPage .workspace.mapexpanded #results{padding:12px 14px 28px!important}
+ #mapPage .workspace.mapexpanded .site-card{padding:13px!important}
+ #mapPage .workspace.mapexpanded .site-thumb{flex-basis:68px!important;height:72px!important}
+}

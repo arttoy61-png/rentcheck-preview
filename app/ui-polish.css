@@ -265,3 +265,11 @@ header .topnav svg{color:currentColor}
  header .topnav button{color:#6b7c92!important}
  header .topnav button[aria-current=page]{color:var(--ui-blue)!important;background:#fff!important;border-color:transparent!important}
 }
+
+/* Map navigation and visible-area results, including a clear undo action. */
+#mapPage #searchBounds[hidden]{display:none!important}
+#mapPage .map-search-result{display:flex;flex-direction:column;align-items:flex-start;gap:5px;margin:9px 14px 12px;padding:12px 14px;border:1px solid #cce1fc;border-radius:12px;background:#f1f7ff;color:#163960}
+#mapPage .map-search-result strong{font-size:15px;line-height:1.4}
+#mapPage .map-search-result span{font-size:12px;color:#60778f}
+#mapPage .map-search-result button{min-height:34px;padding:5px 12px;border:1px solid #b9d4fb;background:#fff;color:#125dc3;border-radius:8px;font-size:13px;font-weight:700}
+@media(max-width:700px){#mapPage .map-search-result{margin:8px 12px 10px;padding:10px 12px}#mapPage .map-search-result strong{font-size:14px}#mapPage #searchBounds{font-weight:700!important}}

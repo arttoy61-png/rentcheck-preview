@@ -96,16 +96,24 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,.s
 
  /* Housing opens as a list page; redevelopment changes to a list page only after List is tapped. */
  #mapPage .workspace.mapexpanded[data-topic=housing] .mapsection,
- #mapPage .workspace.mapexpanded[data-topic=redevelopment] .mapsection{display:none!important}
+ #mapPage .workspace.mapexpanded[data-topic=redevelopment] .mapsection,
+ #mapPage .workspace.mapexpanded[data-topic=sale] .mapsection,
+ #mapPage .workspace.mapexpanded[data-topic=auction] .mapsection{display:none!important}
  #mapPage .workspace.mapexpanded[data-topic=housing] .listpane,
- #mapPage .workspace.mapexpanded[data-topic=redevelopment] .listpane{
+ #mapPage .workspace.mapexpanded[data-topic=redevelopment] .listpane,
+ #mapPage .workspace.mapexpanded[data-topic=sale] .listpane,
+ #mapPage .workspace.mapexpanded[data-topic=auction] .listpane{
    position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-height:none!important;
    border:0!important;border-radius:0!important;box-shadow:none!important;padding-bottom:0!important
  }
  #mapPage .workspace.mapexpanded[data-topic=housing] .listtop,
- #mapPage .workspace.mapexpanded[data-topic=redevelopment] .listtop{padding:4px 16px;min-height:46px;height:46px}
+ #mapPage .workspace.mapexpanded[data-topic=redevelopment] .listtop,
+ #mapPage .workspace.mapexpanded[data-topic=sale] .listtop,
+ #mapPage .workspace.mapexpanded[data-topic=auction] .listtop{padding:4px 16px;min-height:46px;height:46px}
  #mapPage .workspace.mapexpanded[data-topic=housing] #results,
- #mapPage .workspace.mapexpanded[data-topic=redevelopment] #results{padding-bottom:24px}
+ #mapPage .workspace.mapexpanded[data-topic=redevelopment] #results,
+ #mapPage .workspace.mapexpanded[data-topic=sale] #results,
+ #mapPage .workspace.mapexpanded[data-topic=auction] #results{padding-bottom:24px}
 
  /* Source freshness still loads automatically; keep it out of the primary mobile reading path. */
  #mapPage .workspace[data-topic=housing] #homeCalendarStatus{display:none!important}

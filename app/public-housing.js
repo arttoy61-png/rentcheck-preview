@@ -1,1 +1,14 @@
 (()=>{'use strict';
+const $=id=>document.getElementById(id);
+const LH='LH:panId:2015122300020843',isMap=document.body.dataset.view==='map';
+const core=window.RentCheckHousingList,cal=window.RentCheckHomeCalendar;
+const today=core.today(),st={month:today.slice(0,7),day:today,all:false,id:null};
+let model=null,supply=null,archive=null,map=null,markers=[],sdkReady=false,sdkLoading=false;
+const entries=()=>model?.items||[];
+const byId=id=>entries().find(n=>n.id===id);
+const events=(n,d)=>cal.eventsOn(n,d);
+const forDay=d=>entries().filter(n=>events(n,d).length);
+const siteList=n=>n?.id===LH&&supply?.sites?.length?supply.sites:null;
+const coord=s=>Number.isFinite(s?.lat)&&Number.isFinite(s?.lng)&&s.lat>33&&s.lat<39&&s.lng>124&&s.lng<132;
+const mapped=n=>(siteList(n)||[]).filter(coord);
+const pad=n=>String(n).padStart(2,'0');

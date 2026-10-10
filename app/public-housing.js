@@ -20,3 +20,4 @@ const detailNotice=()=>byId(st.id);
 const status=()=>{if(model)$('dataStatus').textContent=cal.statusText(model.home_link)};
 function siteSummary(n){const s=siteList(n);return s?'공급현장 '+s.length+'곳 · 공급 '+s.reduce((v,x)=>v+(Number(x.unit_count)||0),0)+'호 · 위치 확인 '+s.filter(coord).length+'곳':'공급현장 위치 자료 미연결';}
 function noticeCard(n){const labels=st.day?events(n,st.day):[];return '<button class="noticecard" data-id="'+esc(n.id)+'"><span class="label">'+esc(n.agency||'모집')+' · '+esc(core.displayLabel(n))+'</span><strong>'+esc(n.title)+'</strong><small>'+esc(labels.length?labels.join(' · '):n.published_at||'공고일 미확인')+' · '+esc(cal.scheduleText(n))+'</small><small>'+esc(siteSummary(n))+'</small></button>';}
+// Calendar UI

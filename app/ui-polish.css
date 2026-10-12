@@ -308,5 +308,18 @@ header .topnav svg{color:currentColor}
 #mapPage .housing-selected-date{font-size:12px;color:#486986;padding:9px 0 4px}
 #mapPage .housing-selected-date button{font-size:12px;color:#125eb2;background:white;border:1px solid #c9dced;border-radius:7px;padding:4px 8px}
 #mapPage .housing-calendar-results h3{font-size:14px;font-weight:750;color:#1c4268;margin:16px 0 12px}
-#mapPage .mapcanvas.housing-no-pins::after{content:"이 지역은 좌표를 확인한 공급주택이 없습니다.\A공고와 확인된 주소는 왼쪽 목록에서 보세요.";position:absolute;z-index:7;top:78px;left:22px;max-width:310px;padding:15px 17px;border:1px solid #d8e4f0;border-radius:12px;background:#fffefd;box-shadow:0 4px 14px #173c601f;color:#24476d;font-size:13px;line-height:1.6;white-space:pre-line;pointer-events:none}
+#mapPage .mapcanvas.housing-no-pins::after{content:"현재 조건에서 표시할 접수중·예정 공고의 검증 좌표가 없습니다.\A확인된 주소는 목록에서 보세요.";position:absolute;z-index:7;top:78px;left:22px;max-width:310px;padding:15px 17px;border:1px solid #d8e4f0;border-radius:12px;background:#fffefd;box-shadow:0 4px 14px #173c601f;color:#24476d;font-size:13px;line-height:1.6;white-space:pre-line;pointer-events:none}
 @media(max-width:700px){#mapPage .housing-borough-sites-header{display:block}#mapPage .housing-borough-sites-header small{display:block;margin-top:5px}#mapPage .mapcanvas.housing-no-pins::after{top:65px;left:12px;right:12px;max-width:none;font-size:12px;padding:10px 12px}}
+
+
+/* Keep a full borough name visible on narrow housing screens. The desktop
+   housing filters already use two rows; match that structure on mobile. */
+@media(max-width:700px){
+ #mapPage:has(.workspace[data-topic=housing])>.design-filterbar{height:114px!important;min-height:114px!important;flex-basis:114px!important;align-items:flex-start!important}
+ #mapPage:has(.workspace[data-topic=housing]) .design-filterbar .filter-chip-scroll{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:48px 40px!important;min-width:0!important}
+ #mapPage:has(.workspace[data-topic=housing]) .design-filterbar #designDistrict{grid-column:1 / -1!important;grid-row:1!important;min-width:0!important}
+ #mapPage:has(.workspace[data-topic=housing]) .design-filterbar #designNoticeCategory{grid-column:1!important;grid-row:2!important}
+ #mapPage:has(.workspace[data-topic=housing]) .design-filterbar #designNoticeStatus{grid-column:2!important;grid-row:2!important}
+ #mapPage:has(.workspace[data-topic=housing]) .design-filterbar #designNoticeCategory,
+ #mapPage:has(.workspace[data-topic=housing]) .design-filterbar #designNoticeStatus{height:40px!important;min-height:40px!important;min-width:0!important;padding-left:8px!important;padding-right:22px!important;font-size:14px!important}
+}

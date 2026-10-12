@@ -312,14 +312,29 @@ header .topnav svg{color:currentColor}
 @media(max-width:700px){#mapPage .housing-borough-sites-header{display:block}#mapPage .housing-borough-sites-header small{display:block;margin-top:5px}#mapPage .mapcanvas.housing-no-pins::after{top:65px;left:12px;right:12px;max-width:none;font-size:12px;padding:10px 12px}}
 
 
-/* Keep a full borough name visible on narrow housing screens. The desktop
-   housing filters already use two rows; match that structure on mobile. */
+/* Keep the calendar reachable without squeezing the brand or header actions. */
+.header-calendar{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:9px 12px;border:1px solid #b8cde7;border-radius:9px;background:#eff6ff;color:#0a4e9b;text-decoration:none;font-weight:800;white-space:nowrap}
+.header-calendar-icon,.header-calendar-short{display:none}
 @media(max-width:700px){
- #mapPage:has(.workspace[data-topic=housing])>.design-filterbar{height:114px!important;min-height:114px!important;flex-basis:114px!important;align-items:flex-start!important}
- #mapPage:has(.workspace[data-topic=housing]) .design-filterbar .filter-chip-scroll{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:48px 40px!important;min-width:0!important}
- #mapPage:has(.workspace[data-topic=housing]) .design-filterbar #designDistrict{grid-column:1 / -1!important;grid-row:1!important;min-width:0!important}
- #mapPage:has(.workspace[data-topic=housing]) .design-filterbar #designNoticeCategory{grid-column:1!important;grid-row:2!important}
- #mapPage:has(.workspace[data-topic=housing]) .design-filterbar #designNoticeStatus{grid-column:2!important;grid-row:2!important}
- #mapPage:has(.workspace[data-topic=housing]) .design-filterbar #designNoticeCategory,
- #mapPage:has(.workspace[data-topic=housing]) .design-filterbar #designNoticeStatus{height:40px!important;min-height:40px!important;min-width:0!important;padding-left:8px!important;padding-right:22px!important;font-size:14px!important}
+ body>header,body:has(#mapPage:not([hidden]))>header{padding:0 12px!important;gap:8px}
+ header .brand{flex:0 0 auto;font-size:23px!important;min-width:max-content}
+ header .header-calendar{flex:0 0 auto;margin-left:auto;min-width:44px;min-height:44px;height:44px;padding:0 9px;font-size:13px;line-height:1.2}
+ .header-calendar-full{display:none}
+ .header-calendar-icon{display:block;width:20px;height:20px;flex:none}
+ .header-calendar-short{display:inline}
+ .mobile-header-actions{flex:0 0 auto;gap:0}
+ .mobile-header-actions button{flex:0 0 44px;width:44px;min-width:44px}
+
+ /* Region and More share the first row. Topic filters have the entire second
+    row so a narrow third of the viewport can never clip the district name. */
+ #mapPage>.design-filterbar{display:block!important;height:auto!important;min-height:66px!important;flex:0 0 auto!important;position:relative!important;padding:8px 12px!important}
+ #mapPage .design-filterbar .filter-chip-scroll{display:grid!important;width:100%;min-width:0!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:none!important;grid-auto-rows:48px;gap:8px!important;overflow:visible!important}
+ #mapPage .design-filterbar .filter-chip-scroll select{min-width:0!important;max-width:none!important;width:100%!important;padding:6px 24px 6px 10px!important;font-size:14px!important}
+ #mapPage .design-filterbar .filter-chip-scroll #designDistrict{grid-column:1 / -1!important;grid-row:1!important;width:calc(100% - 60px)!important;font-size:16px!important}
+ #mapPage .design-filterbar>button{position:absolute;top:8px;right:12px;width:52px!important;height:48px!important}
+}
+@media(max-width:374px){
+ header .brand{font-size:21px!important}
+ header .header-calendar{width:44px;padding:0}
+ .header-calendar-short{display:none}
 }

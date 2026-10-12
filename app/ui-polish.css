@@ -273,3 +273,40 @@ header .topnav svg{color:currentColor}
 #mapPage .map-search-result span{font-size:12px;color:#60778f}
 #mapPage .map-search-result button{min-height:34px;padding:5px 12px;border:1px solid #b9d4fb;background:#fff;color:#125dc3;border-radius:8px;font-size:13px;font-weight:700}
 @media(max-width:700px){#mapPage .map-search-result{margin:8px 12px 10px;padding:10px 12px}#mapPage .map-search-result strong{font-size:14px}#mapPage #searchBounds{font-weight:700!important}}
+
+
+/* Public housing PC legibility and borough coverage */
+@media(min-width:701px){
+ #mapPage .workspace[data-topic=housing] .design-filterbar{display:block!important;height:auto!important;min-height:0!important;max-height:none!important;padding:10px 16px 12px!important;overflow:visible!important}
+ #mapPage .workspace[data-topic=housing] .design-filterbar .filter-chip-scroll{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;grid-template-rows:42px 42px!important;gap:8px!important;overflow:visible!important;width:100%!important}
+ #mapPage .workspace[data-topic=housing] .design-filterbar select{display:block!important;flex:none!important;width:100%!important;min-width:0!important;max-width:none!important;height:42px!important;min-height:42px!important;margin:0!important;padding:6px 30px 6px 12px!important;font-size:14px!important;line-height:1.3!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+ #mapPage .workspace[data-topic=housing] #designDistrict{grid-column:1 / -1!important;grid-row:1!important}
+ #mapPage .workspace[data-topic=housing] #designNoticeCategory{grid-column:1!important;grid-row:2!important}
+ #mapPage .workspace[data-topic=housing] #designNoticeStatus{grid-column:2!important;grid-row:2!important}
+ #mapPage .workspace[data-topic=housing] .design-filterbar>button{display:none!important}
+ #mapPage .workspace[data-topic=housing] #context .advanced-filters{display:none!important}
+ #mapPage .workspace[data-topic=housing] #coverage{max-height:40px!important;margin:4px 17px 9px!important;font-size:11px!important;line-height:1.5!important;overflow:hidden!important}
+ #mapPage .workspace[data-topic=housing] .subnav{min-height:54px!important}
+ #mapPage .workspace[data-topic=housing] .subnav button{min-height:54px!important;font-size:13px!important}
+}
+#mapPage .housing-borough-sites{border:1px solid #cddff3;background:#f5f9ff;border-radius:12px;margin:10px 0 16px;padding:12px}
+#mapPage .housing-borough-sites-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:9px}
+#mapPage .housing-borough-sites-header strong{font-size:14px;color:#14385f;line-height:1.4}
+#mapPage .housing-borough-sites-header small{font-size:11px;color:#235fa0;white-space:nowrap;font-weight:750}
+#mapPage .housing-site-summary{display:block;width:100%;padding:11px 12px;text-align:left;background:white;border:1px solid #dbe5f1;border-radius:9px;margin:6px 0;color:#183b60}
+#mapPage .housing-site-summary:hover,#mapPage .housing-site-summary:focus-visible{background:#fff;border-color:#5d9bec}
+#mapPage .housing-site-summary strong{display:block;font-size:14px;line-height:1.5}
+#mapPage .housing-site-summary span{display:block;font-size:11px;color:#65788f;line-height:1.55;margin:3px 0 5px}
+#mapPage .housing-site-summary small{display:block;font-size:11px;color:#2768aa;font-weight:650}
+#mapPage .housing-borough-sites>p{font-size:11px;line-height:1.5;color:#73839a;margin:10px 0 0}
+#mapPage .housing-region-confirmed .result-section-title{font-size:13px;font-weight:750;margin:14px 0 9px}
+#mapPage .housing-region-empty{font-size:12px;line-height:1.65;color:#65798d;margin:12px 1px 18px}
+#mapPage .housing-region-unknown{border:1px solid #e0e6ee;border-radius:10px;background:#f9fafc;margin:10px 0 20px;padding:10px 12px}
+#mapPage .housing-region-unknown summary{font-size:12px;font-weight:750;color:#4f6681;cursor:pointer;list-style-position:inside;line-height:1.6}
+#mapPage .housing-region-unknown>p{font-size:11px;line-height:1.6;color:#7d8a99;margin:9px 0}
+#mapPage .housing-region-unknown .result{margin-top:10px}
+#mapPage .housing-selected-date{font-size:12px;color:#486986;padding:9px 0 4px}
+#mapPage .housing-selected-date button{font-size:12px;color:#125eb2;background:white;border:1px solid #c9dced;border-radius:7px;padding:4px 8px}
+#mapPage .housing-calendar-results h3{font-size:14px;font-weight:750;color:#1c4268;margin:16px 0 12px}
+#mapPage .mapcanvas.housing-no-pins::after{content:"이 지역은 좌표를 확인한 공급주택이 없습니다.\A공고와 확인된 주소는 왼쪽 목록에서 보세요.";position:absolute;z-index:7;top:78px;left:22px;max-width:310px;padding:15px 17px;border:1px solid #d8e4f0;border-radius:12px;background:#fffefd;box-shadow:0 4px 14px #173c601f;color:#24476d;font-size:13px;line-height:1.6;white-space:pre-line;pointer-events:none}
+@media(max-width:700px){#mapPage .housing-borough-sites-header{display:block}#mapPage .housing-borough-sites-header small{display:block;margin-top:5px}#mapPage .mapcanvas.housing-no-pins::after{top:65px;left:12px;right:12px;max-width:none;font-size:12px;padding:10px 12px}}

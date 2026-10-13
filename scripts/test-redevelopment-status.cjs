@@ -16,3 +16,12 @@ assert.ok(model.current(records.find(p=>p.id==='cleanup-youwon2-apt')).verificat
 assert.equal(model.current({id:'x',status:'착공',collected_at:'2026-10-13',events:[{stage:'조합설립인가',date:'2026-01-01'}]}).recentStageEvent,null);
 assert.equal(model.current({id:'x',status:'미공개',status_date:'2026-10-13',project_type:'모아타운'}).date,null);
 console.log('PASS all 1,288 records: immutable data, separate operations, unknown stages preserved, no invented dates/eligibility/trades, type-aware progress; verified Ssangmun1 and Banghwa6');
+
+const sourceDateRecord=records.find(p=>p.id==='moa-urban-8791');
+assert.equal(model.sourceDate(sourceDateRecord),'2026.10.02');
+assert.ok(model.coreFacts(sourceDateRecord).some(([k,v])=>k==='공식자료 수정일'&&v==='2026.10.02'));
+assert.equal(sourceDateRecord.source_updated_at,'2026-10-02T17:41:08.000');
+assert.equal(model.current(sourceDateRecord).date,'2023-12-28');
+assert.ok(model.sourceDateHelp(sourceDateRecord).includes('원천 포털의 자료 수정일'));
+assert.ok(model.sourceDateHelp(sourceDateRecord).includes('사업 인가·착공일이나 이 페이지의 자료 수집일과 다를 수 있습니다'));
+assert.equal(model.sourceDate({source_updated_at:'미확인'}),'');

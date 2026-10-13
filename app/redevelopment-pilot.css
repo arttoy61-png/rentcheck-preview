@@ -1,0 +1,47 @@
+/* Scoped to redevelopment. Other topic panels keep their existing layout. */
+#mapPage .workspace[data-topic=redevelopment] .detailpane,#mapPage .workspace[data-topic=redevelopment] #detailBody{min-width:0;max-width:100%;box-sizing:border-box}
+#mapPage .workspace[data-topic=redevelopment] #detailBody{overflow-x:hidden;overflow-wrap:anywhere}
+#mapPage .workspace[data-topic=redevelopment] #detailBody dl{grid-template-columns:minmax(85px,32%) minmax(0,1fr)}
+#mapPage .workspace[data-topic=redevelopment] #detailBody dd{min-width:0;margin-left:0;overflow-wrap:anywhere}
+.redevelopment-pilot *{box-sizing:border-box;min-width:0}
+#detailBody .pilot-current{background:#eff5ff;border:1px solid #b9d2fa;border-left:5px solid #175ccc;border-radius:12px;padding:16px}
+.pilot-label{font-size:12px;font-weight:700;color:#47658b}
+.pilot-current>strong{display:block;color:#1049a4;font-size:28px;line-height:1.35;margin:6px 0}
+.pilot-current>p{margin:4px 0 10px;font-size:14px}
+.pilot-track{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:12px 0;padding:0}
+.pilot-track li{font-size:12px;text-align:center;background:#fff;border:1px solid #dae4f1;border-radius:6px;padding:8px 2px}
+.pilot-track li[aria-current=step]{background:#175ccc;color:#fff;border:2px solid #123f87;font-weight:700}
+.pilot-track b{display:block;font-size:11px}
+.pilot-current>small{display:block;font-size:11px;line-height:1.5;color:#4f6380}
+.pilot-section,.pilot-all{border-top:1px solid #dce5f1;padding-top:16px;margin-top:20px}
+#detailBody .pilot-section h3{margin-top:0}
+.pilot-note{font-size:13px;color:#5b6c80;line-height:1.7}
+.pilot-all>summary{font-weight:750;font-size:17px;cursor:pointer;padding:8px 0}
+.pilot-all>summary small{display:block;font-size:12px;font-weight:400;color:#5e7189}
+.pilot-step{margin:8px 0;border:1px solid #dce5f1;border-radius:9px;background:white}
+.pilot-step>summary{display:flex;align-items:center;gap:8px;padding:12px;cursor:pointer;font-size:14px;font-weight:650;list-style:none}
+.pilot-step>summary::-webkit-details-marker{display:none}
+.pilot-step>summary>span:nth-child(2){flex:1}
+.pilot-step small{display:block;font-weight:400;font-size:11px;color:#617087;line-height:1.5}
+.step-number{flex:0 0 24px;color:#617087;text-align:center}
+.pilot-step.current{border:2px solid #175ccc;background:#f3f7ff}
+.pilot-step.current>summary,.pilot-step.current .step-number{color:#1049a4}
+.pilot-step[open]>summary>b{transform:rotate(45deg)}
+.step-content{padding:0 12px 12px;font-size:13px}
+.step-content article{border-top:1px solid #e3e9f1;padding:9px 0}
+.step-content time{font-weight:700}
+.step-content article p{margin:3px 0}
+.pilot-sources a{display:block;margin:8px 0;font-size:13px}
+.redevelopment-home{white-space:nowrap;font-size:13px!important;min-width:98px;flex-shrink:0;color:#1049a4!important;background:#eff5ff;border:1px solid #b9d2fa;border-radius:8px}
+.workspace[data-topic=redevelopment] .detailtop{flex-wrap:wrap}
+.redevelopment-detail-region{display:flex;flex:0 0 100%;gap:8px;align-items:center}
+.redevelopment-detail-region[hidden]{display:none}
+.redevelopment-detail-region select{min-width:0;flex:1;min-height:40px;border:1px solid #d9e1ea;border-radius:8px;background:#fff;padding:6px 10px}
+.redevelopment-detail-region button{min-height:40px;border:1px solid #b9d2fa;border-radius:8px;background:#eff5ff;padding:6px 10px}
+#mapPage:has(.workspace[data-topic=redevelopment]) .design-filterbar .filter-chip-scroll{min-width:0}
+#mapPage .workspace[data-topic=redevelopment] .design-filterbar{height:auto!important;min-height:0!important;flex-shrink:0}
+#mapPage .workspace[data-topic=redevelopment] .design-filterbar .filter-chip-scroll{display:grid!important;grid-template-columns:minmax(0,1fr) 98px;overflow:visible!important;width:100%}
+#mapPage .workspace[data-topic=redevelopment] .design-filterbar #designDistrict{grid-column:1;grid-row:1}
+#mapPage .workspace[data-topic=redevelopment] .design-filterbar .redevelopment-home{grid-column:2;grid-row:1}
+#mapPage .workspace[data-topic=redevelopment] .design-filterbar select{min-width:0!important;max-width:100%!important;width:100%;text-overflow:ellipsis}
+@media(max-width:700px){#mapPage:has(.workspace[data-topic=redevelopment].has-detail)>.design-filterbar{display:none!important}#mapPage:has(.workspace[data-topic=redevelopment]) .design-filterbar .filter-chip-scroll{padding-right:60px!important;box-sizing:border-box}#mapPage:has(.workspace[data-topic=redevelopment]) .filter-chip-scroll #designDistrict{grid-column:1!important;width:100%!important}.redevelopment-home{grid-column:2;grid-row:1}}

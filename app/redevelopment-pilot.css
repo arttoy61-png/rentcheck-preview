@@ -1,3 +1,4 @@
+@media(max-width:700px){#mapPage .workspace[data-topic=redevelopment].detail-map-visible .zoom{top:auto!important;bottom:190px!important;display:flex!important;flex-direction:row!important;gap:4px!important}}
 @media(max-width:700px){#mapPage .workspace[data-topic=redevelopment].detail-map-visible #searchBounds{top:auto!important;bottom:130px!important}}
 /* Scoped to redevelopment. Other topic panels keep their existing layout. */
 .workspace[data-topic=redevelopment] .redevelopment-card *{box-sizing:border-box;min-width:0}

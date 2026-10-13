@@ -18,7 +18,7 @@ assert.equal(pilot.matches({id:'cleanup-banghwa3'}),false);
 const html=pilot.render({id:'cleanup-banghwa6',title:d.project.name,project_type:'재건축',location:{}},{manifest:{},overview:()=>'',mapControl:()=>'',tool:()=>''});
 assert.equal((html.match(/id="detailTitle"/g)||[]).length,1);
 assert.ok(html.includes('2026-04-22'));assert.ok(html.includes('2028년 8월'));
-assert.ok(html.includes('현재 단계의 날짜는 공개되어 있지 않습니다.'));
+assert.ok(html.includes('단계 발생일 미확인'));
 assert.ok(html.includes('미진행을 뜻하지 않습니다.'));
 assert.ok(html.includes('현재 시공사를 확정하는 정보는 아닙니다.'));
 assert.ok(html.includes('공개 날짜·경과 없음'));

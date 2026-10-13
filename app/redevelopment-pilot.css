@@ -1,4 +1,29 @@
 /* Scoped to redevelopment. Other topic panels keep their existing layout. */
+.workspace[data-topic=redevelopment] .redevelopment-card *{box-sizing:border-box;min-width:0}
+.workspace[data-topic=redevelopment] #detailBody .project-card-heading{display:block!important;position:static!important;height:auto!important;padding:0!important;background:none!important;color:inherit!important;border:0!important}
+.workspace[data-topic=redevelopment] #detailBody .project-card-heading .badge{display:inline-block;width:auto}
+.workspace[data-topic=redevelopment] #detailBody .pilot-track{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px;padding:0}
+.workspace[data-topic=redevelopment] #detailBody .pilot-track li{width:auto!important;max-width:100%;white-space:normal;line-height:1.5}
+.workspace[data-topic=redevelopment] .project-card-heading h2{font-size:23px;line-height:1.4;margin:10px 0}
+.workspace[data-topic=redevelopment] .project-stage-banner{background:#132b4c;color:#fff;border-radius:16px;padding:20px 18px;margin:18px 0}
+.workspace[data-topic=redevelopment] .project-stage-banner .pilot-label{color:#bacee8}
+.workspace[data-topic=redevelopment] .project-stage-banner>strong{display:block;font-size:32px;line-height:1.3;margin:8px 0;font-weight:800;overflow-wrap:anywhere}
+.workspace[data-topic=redevelopment] .project-stage-banner .stage-date{color:#dbeafe;font-size:15px;font-weight:600}
+.workspace[data-topic=redevelopment] .project-stage-banner .stage-meaning{font-size:14px;line-height:1.7}
+.workspace[data-topic=redevelopment] .project-stage-banner small{display:block;font-size:11px;line-height:1.65;color:#c5d4e8;margin-top:8px}
+.workspace[data-topic=redevelopment] .project-stage-banner a{display:block;color:#c1ddff;font-size:11px;margin-top:8px}
+.workspace[data-topic=redevelopment] .project-progress,.workspace[data-topic=redevelopment] .purchase-questions,.workspace[data-topic=redevelopment] .project-transactions,.workspace[data-topic=redevelopment] .project-information{border-top:1px solid #dce5f1;padding-top:18px;margin-top:22px}
+.workspace[data-topic=redevelopment] #detailBody .project-progress h3,.workspace[data-topic=redevelopment] #detailBody .purchase-questions h3,.workspace[data-topic=redevelopment] #detailBody .project-transactions h3,.workspace[data-topic=redevelopment] #detailBody .project-information>h3{font-size:19px;margin-top:0}
+.workspace[data-topic=redevelopment] .purchase-question{padding:16px;background:#f5f8fc;border:1px solid #dbe5f1;border-radius:12px;margin:10px 0}
+.workspace[data-topic=redevelopment] .purchase-question h4{font-size:15px;margin:0 0 8px}
+.workspace[data-topic=redevelopment] .purchase-question p,.workspace[data-topic=redevelopment] .trade-empty p{font-size:13px;line-height:1.75;margin:8px 0 0}
+.workspace[data-topic=redevelopment] .check-needed,.workspace[data-topic=redevelopment] .connection-state{color:#3f5979;font-size:12px;font-weight:700}
+.workspace[data-topic=redevelopment] .trade-empty{border:1px dashed #c4d1e0;border-radius:10px;padding:14px;margin:10px 0;background:#fafcfe}
+.workspace[data-topic=redevelopment] .trade-empty strong{font-size:14px}
+.workspace[data-topic=redevelopment] .original-operations{border-top:1px solid #dce5f1;padding-top:14px;margin-top:18px;font-size:13px;color:#52657b}
+.workspace[data-topic=redevelopment] .original-operations h3{font-size:15px}
+.workspace[data-topic=redevelopment] .original-operations small{display:block;margin-top:6px}
+.workspace[data-topic=redevelopment] .callout-stage{color:#175ccc;font-weight:700;margin:5px 0}
 #mapPage .workspace[data-topic=redevelopment] .detailpane,#mapPage .workspace[data-topic=redevelopment] #detailBody{min-width:0;max-width:100%;box-sizing:border-box}
 #mapPage .workspace[data-topic=redevelopment] #detailBody{overflow-x:hidden;overflow-wrap:anywhere}
 #mapPage .workspace[data-topic=redevelopment] #detailBody dl{grid-template-columns:minmax(85px,32%) minmax(0,1fr)}

@@ -19,3 +19,11 @@ const card=sandbox.window.RentRedevelopmentCard,banghwa=records.find(p=>(p.regis
 assert.equal(card.matches(banghwa,'방화6 엘라비네'),true);assert.equal(card.matches(banghwa,'래미안 608-97'),true);assert.equal(card.matches(banghwa,'방화6단지'),false);
 assert.equal(card.matches({title:'다른 현장',address:'검증 주소'},'엘라비네'),false);
 console.log('PASS unique-ID routes, non-redevelopment isolation, boundary missing/loading/failed/ready and geometry validation, verified token search');
+
+const target={lat:37.55,lng:126.85,level:7};let applied=null;
+scope.state={tab:'redevelopment'};scope.restoreRedevelopmentCamera=target;
+scope.window={RentKakaoSession:{isActive:()=>true},RentKakaoMap:{setCamera:c=>{applied=c;return true;}}};
+vm.runInContext(lines.find(l=>l.startsWith('function applyRedevelopmentCameraRestore(')),scope);
+scope.applyRedevelopmentCameraRestore();assert.deepEqual(applied,target);assert.equal(scope.restoreRedevelopmentCamera,null);
+scope.state.tab='housing';scope.restoreRedevelopmentCamera=target;applied=null;scope.applyRedevelopmentCameraRestore();assert.equal(applied,null);
+console.log('PASS explicit same-tab redevelopment camera restoration, other topics untouched');

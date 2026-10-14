@@ -80,3 +80,5 @@ body.redevelopment-route .closed-badge{color:#74532b;background:#fff2dc}
 body.redevelopment-route .closed-project{border-color:#dfd2bd}
 body.redevelopment-route .project-brand{font-size:13px;color:#425d7c}
 body.redevelopment-route .site-pin[aria-label^="[종료]"] span::before{content:'종료 · ';color:#ffe1a3}
+
+body.redevelopment-route .project-link-row{display:flex;flex-wrap:wrap;margin-bottom:8px}body.redevelopment-route .project-link-row a{font-size:12px;min-height:36px;padding:6px 10px}body.redevelopment-route .boundary-state{border:1px solid #d8e3ef;background:#f4f8fd;border-radius:8px;padding:9px 11px;margin-bottom:14px;font-size:12px;line-height:1.6;overflow-wrap:anywhere}body.redevelopment-route .boundary-state p{margin:0}body.redevelopment-route .boundary-state[data-boundary-state=failed]{background:#fff5e8;border-color:#e4c89f}

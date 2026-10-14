@@ -17,6 +17,7 @@ return `<section class="project-progress"><h3>${t==='모아타운'?'관리구역
 function isClosed(p){return ['조합해산','조합청산','청산 및 조합해산'].includes(window.RentRedevelopmentStatus.current(p).stage);}
 function aliases(p){return (p.registry?.id||p.id)==='cleanup-banghwa6'?['방화6재정비촉진구역','방화6구역','래미안 엘라비네','방화동 608-97']:[];}
 function searchText(p){return [p.title,p.official_name,p.address,...aliases(p)].filter(Boolean).join(' ');}
+function matches(p,query){const norm=s=>String(s||'').replace(/\s/g,'').toLowerCase(),hay=norm(searchText(p));return String(query||'').trim().split(/\s+/).filter(Boolean).every(q=>hay.includes(norm(q)));}
 function mapItems(rows){return rows.map(p=>isClosed(p)?{...p,official_name:'[종료] '+(p.official_name||p.title)}:p);}
 function brand(p){return aliases(p).length?'<p class="project-brand">래미안 엘라비네 · 방화6구역 (방화6단지와 별개)</p>'+source('https://www.raemian.co.kr/sales/sub/s/elravine?menuSeq=10583','브랜드·주소 확인 자료'):'';}
 function questions(p){if(isClosed(p))return `<section class="purchase-questions closed-project"><h3>해산·청산 기록 확인</h3><p>공식 현재 단계는 ${esc(window.RentRedevelopmentStatus.current(p).stage)}입니다. 기존 사업 이력과 공식 자료를 먼저 확인하세요.</p><p class="coverage">새 조합원 승계나 신규 분양을 진행 중인 사업으로 안내하지 않습니다. 해산일은 위 단계 날짜의 확인 상태를 따릅니다.</p><article class="purchase-question"><h4>확인 자료와 문의</h4><p>해산·청산 관련 고시와 기존 사업 이력을 ${esc(p.district||'관할')} 구청 정비사업 담당 부서에 확인하세요.</p><p>질문: 이 사업의 해산·청산 기록과 현재 자료 확인 담당자는 누구인가요?</p></article>${source(p.source,'기존 사업 공식 자료')}</section>`;
@@ -26,5 +27,5 @@ return `<section class="purchase-questions"><h3>지금 매수하면?</h3><p clas
  ['계약 전 서류 대조','등기사항증명서·건축물대장·토지대장과 구역·사업계획 고시','매도인에게 서류 요청 후 관할 구청에 사업자료 확인','서류의 주소·소유 이력과 공식 사업자료가 서로 일치하나요?']
  ].map(([q,doc,office,question])=>`<article class="purchase-question"><div class="question-heading"><h4>${q}</h4><span class="check-needed">개별 확인</span></div><p><b>자료</b> ${doc}</p><p><b>문의</b> ${office}</p><details><summary>문의할 질문</summary><p>${question}</p></details></article>`).join('')}<details class="question-sources"><summary>공식 확인 자료</summary>${source(p.source,'현장 원문')}${source('https://cleanup.seoul.go.kr/cleanup/view/rebuild.do','서울시 정비사업 절차·담당 기관')}<p class="coverage">개인별 적용 법적 조건·자격은 확인되지 않았습니다. 구역 포함 여부는 공식 경계와 검증 위치를 대조해야 하며, 이 지도로 필지의 법적 지위를 판정하지 않습니다.</p></details></section>`;}
 function transactions(){return `<section class="project-transactions"><h3>주변 실거래</h3><p class="connection-state">현장별 실거래 미연결</p><div class="trade-empty"><strong>구역 안 거래 · 확인 필요</strong><p>공식 경계와 필지를 대조한 거래 자료가 연결되지 않았습니다.</p></div><div class="trade-empty"><strong>주변 일반 주택 거래 · 미연결</strong><p>구역 밖 주변 거래는 별도로 확인해야 합니다. 입주권 거래와 구분합니다.</p></div><p class="coverage">확인된 거래 건수·금액이 없어 표와 가격을 표시하지 않습니다.</p></section>`;}
-window.RentRedevelopmentCard={header,progress,questions,transactions,isClosed,aliases,searchText,mapItems};
+window.RentRedevelopmentCard={header,progress,questions,transactions,isClosed,aliases,searchText,mapItems,matches};
 })();

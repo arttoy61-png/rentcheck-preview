@@ -1,0 +1,67 @@
+name: Import isolated redevelopment map feed
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '07 21 * * *' # 06:07 Asia/Seoul, after source timeout window
+concurrency:
+  group: rentcheck-preview-publish
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: Verify importer offline
+        run: python -m unittest discover -s scripts/seoul-redevelopment -p 'test_isolated_feed.py'
+      - name: Read immutable feed and preserve last good map on failure
+        id: import
+        continue-on-error: true
+        run: python scripts/seoul-redevelopment/import_isolated_feed.py --map-dir app/data
+      - name: Validate current or last good map
+        run: |
+          python scripts/seoul-redevelopment/validate_map_file.py app/data/redevelopment-nearby-seoul.json
+          node --check app/redevelopment-nearby.js
+      - name: Commit exactly map and status, rejecting concurrent remote changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          HEAD_BEFORE=$(git rev-parse HEAD)
+          REMOTE_HEAD=$(git ls-remote origin refs/heads/main | cut -f1)
+          test "$HEAD_BEFORE" = "$REMOTE_HEAD"
+          python - <<'PY'
+          import subprocess
+          allowed={'app/data/redevelopment-nearby-seoul.json','app/data/redevelopment-nearby-status.json'}
+          changed=set(subprocess.check_output(['git','diff','--name-only'],text=True).splitlines())
+          assert changed <= allowed, 'Unexpected changed files'
+          assert not subprocess.check_output(['git','diff','--cached','--name-only'],text=True).strip()
+          PY
+          git add -- app/data/redevelopment-nearby-seoul.json app/data/redevelopment-nearby-status.json
+          if ! git diff --cached --quiet; then
+            git -c user.name='Redevelopment preview updater' -c user.email='redevelopment-preview@users.noreply.github.com' commit -m 'data: import verified redevelopment map feed'
+            git push origin HEAD:main
+          fi
+          test "$(git rev-parse HEAD)" = "$(git ls-remote origin refs/heads/main | cut -f1)"
+      # GITHUB_TOKEN push does not trigger pages.yml; deploy this reviewed tree directly.
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: app
+      - name: Publish preview only
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Preserve unsuccessful import outcome after last-good deployment
+        if: steps.import.outcome == 'failure'
+        run: exit 1

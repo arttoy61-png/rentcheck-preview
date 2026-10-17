@@ -1,5 +1,9 @@
 name: Import isolated redevelopment map feed
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/redevelopment-map-refresh.yml'
   workflow_dispatch:
   schedule:
     - cron: '07 21 * * *' # 06:07 Asia/Seoul, after source timeout window

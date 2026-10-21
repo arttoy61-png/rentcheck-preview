@@ -1,6 +1,7 @@
 /* Local Seoul snapshot: source coverage and coordinate coverage are separate. */
 (()=>{'use strict';
 let snapshot=null,failed=false,updateStatus=null;
+const radii=[500,1000,1500,2000];
 const settings=new Map(),defaults={radius:1000,property:'all',deal:'all'};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const valid=p=>Array.isArray(p)&&p.length===2&&p.every(Number.isFinite)&&p[0]>=37.4&&p[0]<=37.75&&p[1]>=126.7&&p[1]<=127.25;
@@ -15,7 +16,7 @@ function query(p,data,selection=defaults){
   const samePoint=point&&center&&distance(center.point,[point.lat,point.lng]);
   if(!center?.verified||!center.source||!valid(center.point)||samePoint===null||samePoint===false||!Number.isFinite(samePoint)||samePoint>1)return{status:'unverified-point'};
   const radius=Number(selection.radius),property=selection.property,deal=selection.deal;
-  if(![500,1000,2000].includes(radius)||!['all','아파트','연립다세대','오피스텔'].includes(property)||!['all','매매','전월세'].includes(deal))return{status:'invalid-filter'};
+  if(!radii.includes(radius)||!['all','아파트','연립다세대','오피스텔'].includes(property)||!['all','매매','전월세'].includes(deal))return{status:'invalid-filter'};
   const services=data.services.filter(s=>(property==='all'||s.split('_')[0]===property)&&(deal==='all'||s.split('_')[1]===deal));
   const totals={raw:0,eligible:0,excluded_cancelled:0,coordinate_unlinked:0,coordinate_linked:0,invalid_value:0};
   for(const service of services)for(const field of Object.keys(totals))totals[field]+=data.counts?.[service]?.[field]||0;
@@ -47,7 +48,7 @@ function render(p){
   const m=snapshot.meta,chosen=options(id),r=query(p,snapshot,chosen);
   const freshness=updateBanner(m,updateStatus)+`<p class="coverage">계약일 ${esc(m.period.join(' ~ '))} · 원천 최신 계약 ${esc(m.latest_contract_date)}<br>자료 확인 ${esc(checkedDate(m.source_checked_at))} (한국시간)</p>`;
   if(r.status!=='ready')return head+freshness+`<p class="connection-state">${r.status==='unverified-point'?'사업 기준 위치 미확인':'거래 자료 확인 필요'}</p><p>확인된 사업 표시점이 없어 주변 거리와 거래를 표시하지 않았습니다. 서울 25구 원천 수집과 사업별 위치 연결은 구분합니다.</p></section>`;
-  const controls='<div class="nearby-filters">'+select('radius','반경',[[500,'500m'],[1000,'1km'],[2000,'2km']],chosen.radius)+select('property','주택 유형',[['all','전체'],['아파트','아파트'],['연립다세대','연립·다세대'],['오피스텔','오피스텔']],chosen.property)+select('deal','거래 유형',[['all','전체'],['매매','매매'],['전월세','전·월세']],chosen.deal)+'</div>';
+  const controls='<div class="nearby-filters">'+select('radius','반경',radii.map(radius=>[radius,radius<1000?radius+'m':(radius/1000)+'km']),chosen.radius)+select('property','주택 유형',[['all','전체'],['아파트','아파트'],['연립다세대','연립·다세대'],['오피스텔','오피스텔']],chosen.property)+select('deal','거래 유형',[['all','전체'],['매매','매매'],['전월세','전·월세']],chosen.deal)+'</div>';
   const counts=r.recordCount?`<div class="nearby-count" role="status" aria-live="polite"><strong>주소 위치가 확인된 주변 ${number(r.complexes.length)}곳 · 거래 ${number(r.recordCount)}건</strong><span>최근 ${number(r.displayCount)}건 먼저 표시 · 나머지는 각 주소에서 펼쳐보기</span></div>`:'<div class="nearby-count" role="status" aria-live="polite"><strong>이 조건의 주변 거래 연결 미완료</strong><span>위치가 확인된 자료에서 해당하는 거래를 찾지 못했습니다.</span></div>';
   const missing=`<p class="nearby-coverage-note">선택 유형의 서울 수집 자료 ${number(r.totals.eligible)}건 중 좌표 미연결 ${number(r.totals.coordinate_unlinked)}건은 거리 계산에서 빠졌습니다.${r.totals.invalid_value?' 금액·면적 확인이 필요한 '+number(r.totals.invalid_value)+'건도 표시에서 제외했습니다.':''} 미연결 수는 서울 전체 기준이며, 이 반경 안의 거래 수가 아닙니다. 주변 전체 거래를 모두 표시한 결과가 아닙니다.</p>`;
   const content=r.complexes.length?r.complexes.map(c=>`<article class="nearby-complex"><h4>${esc(c.name||'건물명 미제공')} <small>약 ${number(Math.round(c.metres/10)*10)}m</small></h4><p>${esc(c.address)} · 주소 위치 대조</p>${c.transactions.slice(0,3).map(transaction).join('')}${c.transactions.length>3?`<details class="nearby-more"><summary>이 주소의 나머지 ${number(c.transactions.length-3)}건 보기</summary>${c.transactions.slice(3).map(transaction).join('')}</details>`:''}</article>`).join(''):'<p class="trade-empty">이 조건에서 위치가 확인된 주변 거래를 찾지 못했습니다. 좌표가 연결되지 않은 자료가 있어 실제 거래가 없다는 뜻은 아닙니다.</p>';
@@ -56,3 +57,4 @@ function render(p){
 if(typeof document!=='undefined')document.addEventListener('change',event=>{const control=event.target.closest?.('[data-nearby-filter]');if(!control)return;const section=control.closest('[data-nearby-project]'),id=section?.dataset.nearbyProject,p=window.PROJECTS?.find(p=>projectId(p)===id);if(!p)return;const name=control.dataset.nearbyFilter,next={...options(id),[name]:name==='radius'?Number(control.value):control.value};settings.set(id,next);section.outerHTML=render(p);document.querySelector(`[data-nearby-project="${CSS.escape(id)}"] [data-nearby-filter="${name}"]`)?.focus();});
 window.RentRedevelopmentNearby={matches,query,distance,ensureLoaded,render,amount,updateBanner};
 })();
+

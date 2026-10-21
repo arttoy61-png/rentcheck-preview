@@ -16,7 +16,7 @@ assert.equal(api.query(project,data,{radius:10000,property:'all',deal:'all'}).st
 const future=JSON.parse(before);future.rows.push({...row,id:'future',date:'2027-01-01'});assert.equal(api.query(project,future).recordCount,1);
 const noProof=JSON.parse(before);noProof.rows.forEach(x=>x.coordinate_source='');assert.equal(api.query(project,noProof).recordCount,0);
 assert.equal(api.amount(25000),'2억 5,000만원');assert.equal(api.amount(10000),'1억원');assert.equal(api.amount(90),'90만원');assert.equal(JSON.stringify(data),before);
-(async()=>{let reads=0;await api.ensureLoaded(async url=>{reads++;return url.endsWith('-status.json')?{version:1,state:'ready',execution_environment:'local'}:data;});await api.ensureLoaded(async()=>{throw Error('cached');});assert.equal(reads,2);const html=api.render(project);for(const s of ['좌표 미연결','서울 전체 기준','계약일','원천 최신 계약','자료 확인','전월세 취소 여부','사업구역 안의 거래나 입주권 거래로 해석하지 않습니다','data-nearby-filter','검증 &lt;주소&gt;'])assert.ok(html.includes(s),s);
+(async()=>{let reads=0;await api.ensureLoaded(async url=>{reads++;return url.endsWith('-status.json')?{version:1,state:'ready',execution_environment:'local'}:data;});await api.ensureLoaded(async()=>{throw Error('cached');});assert.equal(reads,2);const html=api.render(project);assert.ok(html.includes('value="1500"'));assert.ok(html.includes('1.5km'));for(const s of ['좌표 미연결','서울 전체 기준','계약일','원천 최신 계약','자료 확인','전월세 취소 여부','사업구역 안의 거래나 입주권 거래로 해석하지 않습니다','data-nearby-filter','검증 &lt;주소&gt;'])assert.ok(html.includes(s),s);
 assert.ok(html.includes('2026-10-01 ~ 2026-10-16'));assert.ok(html.includes('3개 거래 유형 150/150'));
 assert.ok(api.updateBanner(data.meta,{state:'failed',attempted_at:'2026-10-16T16:00:00Z'},Date.parse('2026-10-16T16:00:00Z')).includes('마지막 정상자료'));
 const failed={window:{}};vm.createContext(failed);vm.runInContext(src,failed);await failed.window.RentRedevelopmentNearby.ensureLoaded(async()=>{throw Error('network');});assert.ok(failed.window.RentRedevelopmentNearby.render(project).includes('거래 0건을 뜻하지 않습니다'));
@@ -24,3 +24,10 @@ console.log('PASS nearby fixture: radius/type/date/address guards, counts, escap
 
 assert.ok(!src.includes("8~10월"),"collection window must not be frozen to August–October");
 assert.ok(src.includes("m.period||[]"),"source scope uses actual snapshot dates");
+
+
+for (const radius of [500,1000,1500,2000]) assert.equal(api.query(project,data,{radius,property:'all',deal:'all'}).status,'ready');
+for (const radius of [0,499,750,1499,2500,NaN,Infinity]) assert.equal(api.query(project,data,{radius,property:'all',deal:'all'}).status,'invalid-filter');
+assert.equal(api.query(project,data,{radius:1500,property:'all',deal:'all'}).recordCount,2);
+assert.equal(api.query(project,data).radius,1000,'existing 1km default is retained');
+assert.ok(api.render(project).includes('불러오는 중'),'unloaded snapshot must not claim unverified position');

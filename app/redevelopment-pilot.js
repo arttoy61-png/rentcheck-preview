@@ -31,12 +31,12 @@ function render(p,ctx){
  const overviewNode=old.querySelector('.project-overview'),overviewWrapper=overviewNode?.parentElement;
  const overview=take('.project-overview')||ctx.overview(p)||'<p>사업개요 수치 미확인</p>';
  if(overviewWrapper?.classList.contains('pilot-section')&&!overviewWrapper.textContent.trim())overviewWrapper.remove();
- // Keep one map action; its existing handler preserves the selected site.
+ // Separate ending detail exploration from locating the selected site.
  old.querySelectorAll('[data-project-map]').forEach(node=>node.remove());
  const mapTemplate=document.createElement('template');mapTemplate.innerHTML=ctx.mapControl(p);
  const mapButton=mapTemplate.content.querySelector('[data-project-map]');
- if(mapButton)mapButton.textContent='지도 보기';
- const mapAction=mapTemplate.innerHTML;
+ if(mapButton){mapButton.removeAttribute('data-project-map');mapButton.setAttribute('data-bw6-locate-map','');mapButton.textContent='방화6 위치 보기';}
+ const mapAction='<button type="button" class="action" data-bw6-browse-map>상세 닫고 지도 둘러보기</button>'+mapTemplate.innerHTML;
  const infoHtml=info?.outerHTML||'';info?.remove();
  const leftovers=[...old.children].filter(n=>!n.classList.contains('project-card-heading')).map(n=>n.outerHTML).join('');
  const verified=window.RentBanghwa6Verified,o=p.overview||{},uid='bw6-'+(++renderSerial);

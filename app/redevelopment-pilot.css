@@ -119,3 +119,13 @@
 #mapPage .banghwa6-compact .bw6-top-actions [data-bw6-locate-map]{min-height:44px;margin:0;padding:9px 14px;border:1px solid #b9cfe9;border-radius:7px;background:#f2f7ff;color:#1049a4;font-size:13px;font-weight:650;line-height:1.6}
 
 #mapPage .banghwa6-compact .bw6-top-actions [data-bw6-browse-map]{min-height:44px;margin:0;padding:9px 14px;font-size:13px;line-height:1.6}
+
+/* Banghwa6 usability: keep existing construction facts visible, with their caveats. */
+#mapPage .banghwa6-compact .bw6-construction-summary{margin:0 0 16px;padding:14px;border:1px solid #dbe6f2;border-radius:9px;background:#f7faff}
+#mapPage .banghwa6-compact .bw6-construction-summary h3{margin:0 0 8px;font-size:15px}
+#mapPage .banghwa6-compact .bw6-construction-summary p{margin:6px 0;line-height:1.65}
+#mapPage .banghwa6-compact .bw6-construction-summary .coverage{font-size:12px;color:#52657b}
+#mapPage .banghwa6-compact .bw6-construction-summary a{display:inline-block;margin:4px 12px 0 0;font-size:12px;line-height:1.8}
+#mapPage .banghwa6-compact .nearby-compact-warning{margin:10px 0;padding:9px 11px;border-left:3px solid #bf841b;background:#fff7e7;color:#554121;font-size:12px;line-height:1.6}
+#mapPage .banghwa6-compact .nearby-transactions-compact .nearby-sources>summary{min-height:44px;padding:10px 0;cursor:pointer;font-weight:650;color:#14568a}
+

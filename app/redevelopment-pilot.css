@@ -113,3 +113,7 @@
  body.redevelopment-route #mapPage .workspace.bw6-selected .detailpane:not([hidden]){grid-column:1!important;grid-row:1!important;left:0!important;right:auto!important;width:100%!important;max-width:420px!important;z-index:35}
 }
 @media(max-width:700px){#mapPage .banghwa6-compact .bw6-heading h2{font-size:21px}#mapPage .banghwa6-compact .bw6-metrics dd{font-size:14px}}
+
+/* Banghwa6 only: map return is reachable before the detail content. */
+#mapPage .banghwa6-compact .bw6-top-actions{display:flex;justify-content:flex-end;margin:0 0 10px}
+#mapPage .banghwa6-compact .bw6-top-actions [data-project-map]{min-height:44px;margin:0;padding:9px 14px;border:1px solid #b9cfe9;border-radius:7px;background:#f2f7ff;color:#1049a4;font-size:13px;font-weight:650;line-height:1.6}

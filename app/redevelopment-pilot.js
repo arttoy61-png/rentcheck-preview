@@ -15,7 +15,9 @@ function render(p,ctx){
  const template=document.createElement('template');template.innerHTML=renderLegacy(p,ctx);
  const old=template.content.firstElementChild,info=old.querySelector('.project-information');
  const take=selector=>{const node=old.querySelector(selector);if(!node)return '';const html=node.outerHTML;node.remove();return html;};
- const heading=take('.project-card-heading').replace('id="detailTitle"','');
+ // The compact header replaces the legacy title block.
+ take('.project-card-heading');
+ old.querySelector(':scope > #detailTitle')?.remove();
  const stage=take('.project-stage-banner')||take('.pilot-current');
  const stageHelp=take('.stage-verification');
  const progress=take('.project-progress'),historyHtml=take('.pilot-all');
@@ -25,7 +27,16 @@ function render(p,ctx){
  if(transactions){const tx=document.createElement('template');tx.innerHTML=transactions;
   for(const candidate of [...old.children])if(candidate.outerHTML===tx.content.firstElementChild?.outerHTML)candidate.remove();
  }
- const overview=ctx.overview(p)||'<p>사업개요 수치 미확인</p>';
+ // Move, rather than copy, the verified overview out of the source fold.
+ const overviewNode=old.querySelector('.project-overview'),overviewWrapper=overviewNode?.parentElement;
+ const overview=take('.project-overview')||ctx.overview(p)||'<p>사업개요 수치 미확인</p>';
+ if(overviewWrapper?.classList.contains('pilot-section')&&!overviewWrapper.textContent.trim())overviewWrapper.remove();
+ // Keep one map action; its existing handler preserves the selected site.
+ old.querySelectorAll('[data-project-map]').forEach(node=>node.remove());
+ const mapTemplate=document.createElement('template');mapTemplate.innerHTML=ctx.mapControl(p);
+ const mapButton=mapTemplate.content.querySelector('[data-project-map]');
+ if(mapButton)mapButton.textContent='지도 보기';
+ const mapAction=mapTemplate.innerHTML;
  const infoHtml=info?.outerHTML||'';info?.remove();
  const leftovers=[...old.children].filter(n=>!n.classList.contains('project-card-heading')).map(n=>n.outerHTML).join('');
  const verified=window.RentBanghwa6Verified,o=p.overview||{},uid='bw6-'+(++renderSerial);
@@ -33,14 +44,15 @@ function render(p,ctx){
  const tab=(key,label)=>`<button type="button" role="tab" id="${uid}-${key}-tab" aria-controls="${uid}-${key}" aria-selected="${activeTab===key}" tabindex="${activeTab===key?0:-1}" data-bw6-tab="${key}">${label}</button>`;
  const panel=(key,html)=>`<section role="tabpanel" id="${uid}-${key}" aria-labelledby="${uid}-${key}-tab" data-bw6-panel="${key}" ${activeTab===key?'':'hidden'}>${html}</section>`;
  return `<div class="redevelopment-pilot redevelopment-card banghwa6-compact" data-bw6-only>
+ <div class="bw6-top-actions">${mapAction}</div>
  <header class="bw6-heading"><small>강서구 · ${esc(p.project_type||'재건축')}</small><h2 id="detailTitle">방화6재정비촉진구역</h2><p>${esc(verified?.project.address||p.address||'주소 미확인')}</p><small>자료 확인 ${esc(verified?.verifiedAt||checked)} · 단계 발생일 ${esc(verified?.project.currentStageDate||'미확인')}</small></header>
  <div class="bw6-status"><span>현재 단계</span><strong>${esc(verified?.project.currentStage||'미확인')}</strong></div>
  <dl class="bw6-metrics">${metric('구역면적',o.area_m2,'㎡')}${metric('조합원',o.members,'명')}${metric('지상',o.floors_above_ground,'층')}</dl>
  <div class="bw6-tabs" role="tablist" aria-label="방화6 상세 정보">${tab('overview','사업 개요')}${tab('history','추진 이력')}${tab('transactions','주변 실거래')}</div>
- ${panel('overview',`<p class="bw6-next"><strong>다음에 확인할 자료</strong><br>공식 변경 공고와 분양 안내</p><details class="bw6-fold"><summary>사업 상세</summary>${overview}${heading}</details><details class="bw6-fold"><summary>매수 전 확인사항</summary>${questions}</details><details class="bw6-fold"><summary>공식 출처 · 기준일 · 위치 근거</summary>${stage}${stageHelp}${infoHtml}${leftovers}</details>`)}
+ ${panel('overview',`<p class="bw6-next"><strong>다음에 확인할 자료</strong><br>공식 변경 공고와 분양 안내</p><details class="bw6-fold"><summary>사업 상세</summary>${overview}</details><details class="bw6-fold"><summary>매수 전 확인사항</summary>${questions}</details><details class="bw6-fold"><summary>공식 출처 · 기준일 · 위치 근거</summary>${stage}${stageHelp}${infoHtml}${leftovers}</details>`)}
  ${panel('history',progress+historyHtml)}
  ${panel('transactions',`<p class="bw6-data-note">좌표가 연결된 거래만 표시합니다. 주변 전체 거래가 아닙니다.</p>${transactions}`)}
- <div class="bw6-footer">${source(home,'공식 자료 보기')}${ctx.mapControl(p)}</div></div>`;
+ <div class="bw6-footer">${source(home,'공식 자료 보기')}</div></div>`;
 }
 function selectTab(button){const root=button.closest('[data-bw6-only]');if(!root)return;activeTab=button.dataset.bw6Tab;
  root.querySelectorAll('[data-bw6-tab]').forEach(b=>{const selected=b===button;b.setAttribute('aria-selected',String(selected));b.tabIndex=selected?0:-1;});

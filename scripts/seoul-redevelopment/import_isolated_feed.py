@@ -11,7 +11,25 @@ NAMES=['redevelopment-nearby-seoul.json','redevelopment-nearby-status.json']
 DISTRICTS=dict(zip(['11110','11140','11170','11200','11215','11230','11260','11290','11305','11320','11350','11380','11410','11440','11470','11500','11530','11545','11560','11590','11620','11650','11680','11710','11740'],['종로구','중구','용산구','성동구','광진구','동대문구','중랑구','성북구','강북구','도봉구','노원구','은평구','서대문구','마포구','양천구','강서구','구로구','금천구','영등포구','동작구','관악구','서초구','강남구','송파구','강동구']))
 ROW_FIELDS={'id','complex_id','lawd_cd','gu_name','name','type','date','address','lat','lng','coordinate_source','coordinate_checked_at','coordinate_basis','area_m2','floor','deal_amount','deposit','monthly_rent'}
 
+# Only already-public coordinate evidence is shipped with this public consumer.
+# New or changed cached coordinates fail closed until the reference is reviewed.
+PUBLIC_COORDINATES_PATH=Path(__file__).with_name('approved-public-coordinates.json')
+PUBLIC_COORDINATES_SHA256='c3377d727a56eddc05b3a34179919d1a4c39ae3086a5de5b184995bd99f74789'
+CACHE_BASIS='approved_saved_address_cache'
+CACHE_SOURCE='기존 강서 주소 대조 좌표 캐시 (원좌표 확인일 미보존)'
+CACHE_RECORDED_AT='2026-10-19T16:27:01Z'
+
 class FeedError(RuntimeError):pass
+
+def public_coordinate_reference():
+    try:raw=PUBLIC_COORDINATES_PATH.read_bytes()
+    except OSError:raise FeedError('public_coordinate_reference_unavailable') from None
+    if sha256(raw).hexdigest()!=PUBLIC_COORDINATES_SHA256:
+        raise FeedError('public_coordinate_reference_digest_mismatch')
+    document=json.loads(raw)
+    if document.get('version')!=1 or not isinstance(document.get('points'),dict):
+        raise FeedError('invalid_public_coordinate_reference')
+    return document['points']
 
 def read(path):return json.loads(Path(path).read_text(encoding='utf8'))
 def iso(value):
@@ -76,20 +94,33 @@ def validate(data,now=None,require_fresh=True):
         point=p['point']
         if not isinstance(point,list) or len(point)!=2 or any(type(v) not in [int,float] or not math.isfinite(v) for v in point) or not 37.4<=point[0]<=37.75 or not 126.7<=point[1]<=127.25:raise FeedError('invalid_project_coordinate')
     row_counts=Counter();ids=set()
+    public_points=public_coordinate_reference() if any(r.get('coordinate_basis')==CACHE_BASIS for r in rows) else {}
     start,end=map(date.fromisoformat,m['period'])
     if start.day!=1 or (end.year*12+end.month)-(start.year*12+start.month)!=2:raise FeedError('invalid_three_month_period')
     for r in rows:
-        if set(r)!=ROW_FIELDS:raise FeedError('unexpected_row_field')
+        cached=r.get('coordinate_basis')==CACHE_BASIS
+        fields=ROW_FIELDS|{'coordinate_cache_recorded_at'} if cached else ROW_FIELDS
+        if set(r)!=fields:raise FeedError('unexpected_row_field')
         if r['lawd_cd'] not in data['districts'] or r['type'] not in data['services'] or not r['complex_id'].startswith(r['lawd_cd']+'-'):raise FeedError('invalid_row_identity')
         if not isinstance(r['id'],str) or not r['id'] or r['id'] in ids:raise FeedError('duplicate_or_invalid_row_id')
         ids.add(r['id']);row_counts[(r['lawd_cd'],r['type'])]+=1
         if r['gu_name']!=DISTRICTS[r['lawd_cd']]:raise FeedError('row_district_name_mismatch')
         if not isinstance(r['address'],str) or not r['address'].startswith('서울특별시 '+r['gu_name']+' '):raise FeedError('row_address_district_mismatch')
         if not start<=date.fromisoformat(r['date'])<=end:raise FeedError('invalid_contract_date')
-        if not r['coordinate_source'] or not r['coordinate_checked_at']:raise FeedError('coordinate_evidence_missing')
+        if cached:
+            if (r['lawd_cd']!='11500' or r['coordinate_source']!=CACHE_SOURCE
+                    or r['coordinate_checked_at'] is not None
+                    or r['coordinate_cache_recorded_at']!=CACHE_RECORDED_AT
+                    or iso(CACHE_RECORDED_AT)>t):
+                raise FeedError('saved_cache_provenance_mismatch')
+        elif not r['coordinate_source'] or not r['coordinate_checked_at']:raise FeedError('coordinate_evidence_missing')
         for k in ['lat','lng','area_m2','floor']:
             if type(r[k]) not in [int,float] or not math.isfinite(r[k]):raise FeedError('invalid_numeric')
         if not 37.4<=r['lat']<=37.75 or not 126.7<=r['lng']<=127.25 or r['area_m2']<=0:raise FeedError('invalid_coordinate')
+        if cached:
+            address=r['address'].removeprefix('서울특별시 강서구 ')
+            if public_points.get(address)!=[r['lat'],r['lng']]:
+                raise FeedError('saved_cache_public_coordinate_mismatch')
         required=['deal_amount'] if r['type'].endswith('_매매') else ['deposit','monthly_rent']
         if any(type(r[k]) not in [int,float] or not math.isfinite(r[k]) or r[k]<0 for k in required):raise FeedError('invalid_price')
     for code,counts in data['district_counts'].items():

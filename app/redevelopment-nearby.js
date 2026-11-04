@@ -7,6 +7,16 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const valid=p=>Array.isArray(p)&&p.length===2&&p.every(Number.isFinite)&&p[0]>=37.4&&p[0]<=37.75&&p[1]>=126.7&&p[1]<=127.25;
 const projectId=p=>p?.registry?.id||p?.id;
 const number=n=>Number(n||0).toLocaleString('ko-KR');
+const savedCache=r=>r.coordinate_basis==='approved_saved_address_cache';
+function coordinateEvidence(r){
+  if(!savedCache(r))return Boolean(r.coordinate_source&&r.coordinate_checked_at);
+  return r.lawd_cd==='11500'&&r.gu_name==='강서구'&&typeof r.address==='string'&&r.address.startsWith('서울특별시 강서구 ')&&r.coordinate_source==='기존 강서 주소 대조 좌표 캐시 (원좌표 확인일 미보존)'&&r.coordinate_checked_at===null&&r.coordinate_cache_recorded_at==='2026-10-19T16:27:01Z';
+}
+function coordinateDates(rows){
+  const verified=[...new Set(rows.filter(r=>!savedCache(r)&&typeof r.coordinate_checked_at==='string'&&r.coordinate_checked_at).map(r=>r.coordinate_checked_at.slice(0,10)))].sort();
+  const cached=rows.filter(r=>savedCache(r)&&coordinateEvidence(r));
+  return (verified.length?'주소 좌표 확인일 '+esc(verified.join(', '))+'.':'주소 좌표 확인일 미확인.')+(cached.length?' 기존 저장 주소 좌표를 재사용한 '+number(cached.length)+'건은 원좌표 확인일이 보존되지 않았습니다. 캐시 기록일 2026-10-19은 좌표 확인일이 아닙니다.':'');
+}
 function distance(a,b){if(!valid(a)||!valid(b))return null;const rad=n=>n*Math.PI/180,x=rad(a[0]),y=rad(b[0]),h=Math.sin((y-x)/2)**2+Math.cos(x)*Math.cos(y)*Math.sin(rad(b[1]-a[1])/2)**2;return 6371008.8*2*Math.asin(Math.sqrt(Math.min(1,h)));}
 function matches(p){return !!p&&typeof p.district==='string';}
 function options(id){return settings.get(id)||{...defaults};}
@@ -21,7 +31,7 @@ function query(p,data,selection=defaults){
   const totals={raw:0,eligible:0,excluded_cancelled:0,coordinate_unlinked:0,coordinate_linked:0,invalid_value:0};
   for(const service of services)for(const field of Object.keys(totals))totals[field]+=data.counts?.[service]?.[field]||0;
   const period=data.meta.period;
-  const rows=data.rows.filter(r=>services.includes(r.type)&&r.coordinate_source&&r.coordinate_checked_at&&r.date>=period[0]&&r.date<=period[1]&&Number.isFinite(r.area_m2)&&Number.isFinite(r.floor)&&
+  const rows=data.rows.filter(r=>services.includes(r.type)&&coordinateEvidence(r)&&r.date>=period[0]&&r.date<=period[1]&&Number.isFinite(r.area_m2)&&Number.isFinite(r.floor)&&
     (r.type.endsWith('_매매')?Number.isFinite(r.deal_amount):Number.isFinite(r.deposit)&&Number.isFinite(r.monthly_rent)))
     .map(r=>({...r,metres:distance(center.point,[r.lat,r.lng])})).filter(r=>r.metres!==null&&r.metres<=radius);
   const groups=new Map();for(const row of rows){if(!groups.has(row.complex_id))groups.set(row.complex_id,{...row,transactions:[]});groups.get(row.complex_id).transactions.push(row);}
@@ -55,7 +65,7 @@ function render(p){
   const missing=`<p class="nearby-coverage-note">선택 유형의 서울 수집 자료 ${number(r.totals.eligible)}건 중 좌표 미연결 ${number(r.totals.coordinate_unlinked)}건은 거리 계산에서 빠졌습니다.${r.totals.invalid_value?' 금액·면적 확인이 필요한 '+number(r.totals.invalid_value)+'건도 표시에서 제외했습니다.':''} 미연결 수는 서울 전체 기준이며, 이 반경 안의 거래 수가 아닙니다. 주변 전체 거래를 모두 표시한 결과가 아닙니다.</p>`;
   const caution=compact?`<p class="nearby-compact-warning">${r.recordCount?'좌표 연결 거래만 표시하며, 누락·미연결 자료가 있어 주변 전체 거래는 아닙니다.':'좌표 연결 거래만 확인한 결과입니다. 누락·미연결 자료가 있어 실제 거래가 없다는 뜻은 아닙니다.'}</p>`:'';
   const content=r.complexes.length?r.complexes.map(c=>`<article class="nearby-complex"><h4>${esc(c.name||'건물명 미제공')} <small>약 ${number(Math.round(c.metres/10)*10)}m</small></h4><p>${esc(c.address)} · 주소 위치 대조</p>${c.transactions.slice(0,3).map(transaction).join('')}${c.transactions.length>3?`<details class="nearby-more"><summary>이 주소의 나머지 ${number(c.transactions.length-3)}건 보기</summary>${c.transactions.slice(3).map(transaction).join('')}</details>`:''}</article>`).join(''):compact?'':'<p class="trade-empty">이 조건에서 위치가 확인된 주변 거래를 찾지 못했습니다. 좌표가 연결되지 않은 자료가 있어 실제 거래가 없다는 뜻은 아닙니다.</p>';
-  return head+controls+(compact?warning: freshness)+counts+(compact?caution:missing)+content+`<details class="nearby-sources"><summary>${compact?'자료 기준·누락 범위 확인':'거리·수집 범위 확인'}</summary>${compact?freshness+missing+(r.recordCount?`<p class="coverage">최근 ${number(r.displayCount)}건 먼저 표시 · 나머지는 각 주소에서 펼쳐보기</p>`:''):''}<p>${number(m.complete_districts)}개 구 · ${esc((m.period||[]).join(" ~ "))} · ${number(snapshot.services?.length||0)}개 거래 유형 ${number(m.successful_partitions)}/${number(m.expected_partitions)}개 조합의 API 페이지를 확인했습니다. 원천 ${number(m.raw_rows)}건 중 취소표시 ${number(m.excluded_cancelled)}건을 제외했습니다. 이 수는 위 반경 안의 거래 수가 아닙니다.</p><p>사업의 공식 경계 표시 중심점에서 거래 주소 좌표까지의 직선거리입니다. 사업구역 안의 거래나 입주권 거래로 해석하지 않습니다. 건물 동·호수나 필지 경계를 검증한 좌표가 아닙니다.</p><p>${esc(m.cancellation_limit)} 같은 내용의 원천행은 별개 계약일 수 있어 자동으로 합치지 않았습니다.</p><p>${esc(m.coordinate_limit)} 주소 좌표 확인일 ${esc([...new Set(snapshot.rows.map(x=>x.coordinate_checked_at.slice(0,10)))].sort().join(', '))}.</p><p><a href="${esc(m.raw_source)}" target="_blank" rel="noopener" data-preserve>국토교통부 실거래가 공개시스템 ↗</a></p><p class="coverage">자료는 조회 시점까지 신고된 계약입니다. 이후 신고·취소로 달라질 수 있습니다.</p></details></section>`;
+  return head+controls+(compact?warning: freshness)+counts+(compact?caution:missing)+content+`<details class="nearby-sources"><summary>${compact?'자료 기준·누락 범위 확인':'거리·수집 범위 확인'}</summary>${compact?freshness+missing+(r.recordCount?`<p class="coverage">최근 ${number(r.displayCount)}건 먼저 표시 · 나머지는 각 주소에서 펼쳐보기</p>`:''):''}<p>${number(m.complete_districts)}개 구 · ${esc((m.period||[]).join(" ~ "))} · ${number(snapshot.services?.length||0)}개 거래 유형 ${number(m.successful_partitions)}/${number(m.expected_partitions)}개 조합의 API 페이지를 확인했습니다. 원천 ${number(m.raw_rows)}건 중 취소표시 ${number(m.excluded_cancelled)}건을 제외했습니다. 이 수는 위 반경 안의 거래 수가 아닙니다.</p><p>사업의 공식 경계 표시 중심점에서 거래 주소 좌표까지의 직선거리입니다. 사업구역 안의 거래나 입주권 거래로 해석하지 않습니다. 건물 동·호수나 필지 경계를 검증한 좌표가 아닙니다.</p><p>${esc(m.cancellation_limit)} 같은 내용의 원천행은 별개 계약일 수 있어 자동으로 합치지 않았습니다.</p><p>${esc(m.coordinate_limit)} ${coordinateDates(snapshot.rows)}</p><p><a href="${esc(m.raw_source)}" target="_blank" rel="noopener" data-preserve>국토교통부 실거래가 공개시스템 ↗</a></p><p class="coverage">자료는 조회 시점까지 신고된 계약입니다. 이후 신고·취소로 달라질 수 있습니다.</p></details></section>`;
 }
 if(typeof document!=='undefined')document.addEventListener('change',event=>{const control=event.target.closest?.('[data-nearby-filter]');if(!control)return;const section=control.closest('[data-nearby-project]'),id=section?.dataset.nearbyProject,p=window.PROJECTS?.find(p=>projectId(p)===id);if(!p)return;const name=control.dataset.nearbyFilter,next={...options(id),[name]:name==='radius'?Number(control.value):control.value};settings.set(id,next);section.outerHTML=render(p);document.querySelector(`[data-nearby-project="${CSS.escape(id)}"] [data-nearby-filter="${name}"]`)?.focus();});
 window.RentRedevelopmentNearby={matches,query,distance,ensureLoaded,render,amount,updateBanner};

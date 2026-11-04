@@ -126,3 +126,23 @@ function assertLegacyLayout(html,empty=false){
   assert.equal(JSON.stringify(fixture),fixtureBefore,'render and filter changes do not mutate snapshot data');
   console.log('PASS Banghwa6 compact UI: positive/empty/load failure/update failure/stale/unverified, hidden provenance and exact omissions, unchanged other-site layout, four radii/default and filter state');
 })().catch(e=>{console.error(e);process.exitCode=1;});
+
+// The public importer checks exact cache membership. The UI additionally keeps
+// cached provenance distinct and must never call slice() on its null checked_at.
+(async()=>{
+  const fixture=compactFixture();
+  fixture.rows[0]={...fixture.rows[0],address:'서울특별시 강서구 테스트동 1',coordinate_basis:'approved_saved_address_cache',coordinate_source:'기존 강서 주소 대조 좌표 캐시 (원좌표 확인일 미보존)',coordinate_checked_at:null,coordinate_cache_recorded_at:'2026-10-19T16:27:01Z'};
+  const loaded=await loadedApi(fixture),html=loaded.api.render(banghwa);
+  assert.equal(loaded.api.query(banghwa,fixture).recordCount,1,'approved cache row is not silently dropped');
+  assert.ok(html.includes('원좌표 확인일이 보존되지 않았습니다'));
+  assert.ok(html.includes('캐시 기록일 2026-10-19은 좌표 확인일이 아닙니다'));
+  assert.ok(!html.includes('주소 좌표 확인일 2026-10-19'),'cache date is not a verification date');
+  assert.ok(!html.includes('1970-01-01'),'null date is not coerced to Unix epoch');
+  for(const change of [{coordinate_source:'Kakao'},{coordinate_checked_at:'2026-10-19'},{coordinate_cache_recorded_at:'2026-10-20T00:00:00Z'},{lawd_cd:'11110'},{address:'서울특별시 종로구 테스트동 1'}]){
+    const bad=JSON.parse(JSON.stringify(fixture));Object.assign(bad.rows[0],change);
+    assert.equal(loaded.api.query(banghwa,bad).recordCount,0,'cache provenance rejected: '+JSON.stringify(change));
+  }
+  const noProof=JSON.parse(JSON.stringify(data));noProof.rows[0].coordinate_checked_at=null;
+  assert.equal(loaded.api.query(project,noProof).recordCount,0,'ordinary null date remains rejected');
+  console.log('PASS cached coordinate UI: included only with exact provenance, null-safe render, honest date labels, invalid provenance rejected');
+})().catch(e=>{console.error(e);process.exitCode=1;});

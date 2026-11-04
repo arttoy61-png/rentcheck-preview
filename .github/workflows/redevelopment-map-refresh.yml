@@ -4,6 +4,9 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/redevelopment-map-refresh.yml'
+      - 'scripts/seoul-redevelopment/**'
+      - 'app/redevelopment-nearby.js'
+      - 'scripts/test-redevelopment-nearby.cjs'
   workflow_dispatch:
   schedule:
     - cron: '07 21 * * *' # 06:07 Asia/Seoul, after source timeout window
@@ -29,7 +32,9 @@ jobs:
         with:
           python-version: '3.11'
       - name: Verify importer offline
-        run: python -m unittest discover -s scripts/seoul-redevelopment -p 'test_isolated_feed.py'
+        run: |
+          python -m unittest discover -s scripts/seoul-redevelopment -p 'test_*.py'
+          node scripts/test-redevelopment-nearby.cjs
       - name: Read immutable feed and preserve last good map on failure
         id: import
         continue-on-error: true

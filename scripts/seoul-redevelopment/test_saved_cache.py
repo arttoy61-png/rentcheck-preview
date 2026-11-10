@@ -28,12 +28,26 @@ def saved_fixture():
 class SavedCacheTests(unittest.TestCase):
     def test_public_reference_digest_and_membership(self):
         points=importer.public_coordinate_reference()
-        self.assertEqual(len(points),6569)
+        self.assertEqual(len(points),6570)
+        self.assertEqual(points['화곡동 400-5'],[37.539428,126.841004])
         self.assertEqual(points['마곡동 741'],[37.563954,126.819605])
 
     def test_approved_saved_row_preserves_null_verification_date(self):
         data=saved_fixture()
         self.assertIsNone(importer.validate(data,now=NOW)['rows'][0]['coordinate_checked_at'])
+
+    def test_reviewed_hwagok_address_is_exact_and_preserves_cache_provenance(self):
+        data=saved_fixture()
+        data['rows'][0].update(address='서울특별시 강서구 화곡동 400-5',
+                               name='한울씨티빌',lat=37.539428,lng=126.841004)
+        row=importer.validate(data,now=NOW)['rows'][0]
+        self.assertIsNone(row['coordinate_checked_at'])
+        self.assertEqual(row['coordinate_cache_recorded_at'],importer.CACHE_RECORDED_AT)
+        for key in ['lat','lng']:
+            changed=copy.deepcopy(data)
+            changed['rows'][0][key]+=0.000001
+            with self.subTest(key=key),self.assertRaisesRegex(importer.FeedError,'saved_cache_public_coordinate_mismatch'):
+                importer.validate(changed,now=NOW)
 
     def test_old_row_contract_still_works(self):
         data=fixture();data['meta']['source_checked_at']=NOW.isoformat()

@@ -28,9 +28,20 @@ def saved_fixture():
 class SavedCacheTests(unittest.TestCase):
     def test_public_reference_digest_and_membership(self):
         points=importer.public_coordinate_reference()
-        self.assertEqual(len(points),6570)
+        self.assertEqual(len(points),6572)
         self.assertEqual(points['화곡동 400-5'],[37.539428,126.841004])
         self.assertEqual(points['마곡동 741'],[37.563954,126.819605])
+
+    def test_two_reviewed_additions_exact_and_changed_pair_rejected(self):
+        for address, point in [('방화동 583-50', [37.568908,126.809526]), ('등촌동 515-15',[37.546217,126.858272])]:
+            data=saved_fixture(); row=data['rows'][0]
+            row.update(address='서울특별시 강서구 '+address, lat=point[0], lng=point[1])
+            with self.subTest(address=address):
+                self.assertIs(importer.validate(data, now=NOW),data)
+                self.assertIsNone(row['coordinate_checked_at'])
+                row['lat']+=0.000001
+                with self.assertRaisesRegex(importer.FeedError,'saved_cache_public_coordinate_mismatch'):
+                    importer.validate(data,now=NOW)
 
     def test_approved_saved_row_preserves_null_verification_date(self):
         data=saved_fixture()

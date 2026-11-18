@@ -14,7 +14,7 @@ ROW_FIELDS={'id','complex_id','lawd_cd','gu_name','name','type','date','address'
 # Only already-public coordinate evidence is shipped with this public consumer.
 # New or changed cached coordinates fail closed until the reference is reviewed.
 PUBLIC_COORDINATES_PATH=Path(__file__).with_name('approved-public-coordinates.json')
-PUBLIC_COORDINATES_SHA256='3bdae42f4d9d58d87d7cf4b9c73a16823d6e94e710a3b4e3fa1c08d515c7bb54'
+PUBLIC_COORDINATES_SHA256='90f34fe4a785d046b0bf2ee3c41aeadb2bcd8b20b2f3697aa1da630d263fb561'
 CACHE_BASIS='approved_saved_address_cache'
 CACHE_SOURCE='기존 강서 주소 대조 좌표 캐시 (원좌표 확인일 미보존)'
 CACHE_RECORDED_AT='2026-10-19T16:27:01Z'
